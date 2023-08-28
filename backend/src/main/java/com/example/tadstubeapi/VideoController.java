@@ -1,0 +1,187 @@
+package com.example.tadstubeapi;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.buffer.DefaultDataBufferFactory;
+import org.springframework.http.HttpHeaders;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class VideoController {
+
+    // GetMapping que retorna uma parte do vídeo
+
+        @GetMapping("/stream/{filename:.+}")
+        public ResponseEntity<Resource> streamVideo(
+                @PathVariable String filename,
+                HttpServletRequest request) throws IOException {
+
+            File videoFile = new File("upload-dir/" + filename);
+            if (!videoFile.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            long videoLength = videoFile.length();
+            String rangeHeader = request.getHeader(HttpHeaders.RANGE);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentLength(videoLength);
+
+            if (rangeHeader != null && rangeHeader.startsWith("bytes=")) {
+                String[] rangeValues = rangeHeader.substring(6).split("-");
+                long start = Long.parseLong(rangeValues[0]);
+                long end = videoLength - 1;
+                if (rangeValues.length > 1) {
+                    end = Long.parseLong(rangeValues[1]);
+                }
+
+                InputStream inputStream = Files.newInputStream(videoFile.toPath());
+                inputStream.skip(start);
+
+                long contentLength = end - start + 1;
+
+                headers.add(HttpHeaders.ACCEPT_RANGES, "bytes");
+                headers.add(HttpHeaders.CONTENT_RANGE, "bytes " + start + "-" + end + "/" + videoLength);
+                headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
+                headers.add(HttpHeaders.CONTENT_TYPE, "video/mp4");
+
+                InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
+
+                return new ResponseEntity<>(inputStreamResource, headers, HttpStatus.PARTIAL_CONTENT);
+            } else {
+                InputStream inputStream = Files.newInputStream(videoFile.toPath());
+
+                InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
+                headers.add(HttpHeaders.CONTENT_TYPE, "video/mp4");
+                return new ResponseEntity<>(inputStreamResource, headers, HttpStatus.OK);
+            }
+        }
+
+
+//        return Flux.just(videoFile)
+//                .map(file -> {
+//                    try {
+//                        return Files.readAllBytes(file.toPath());
+//                    } catch (IOException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                })
+//                .map(bytes -> new DefaultDataBufferFactory().wrap(bytes));
+
+//    @GetMapping("/stream/{filename:.+}")
+//    public ResponseEntity<InputStreamResource> streamVideo(
+//            @PathVariable String filename,
+//            HttpServletRequest request) throws IOException {
+//
+//        File videoFile = new File("upload-dir/" + filename);
+//        if (!videoFile.exists()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        long videoLength = videoFile.length();
+//        String rangeHeader = request.getHeader(HttpHeaders.RANGE);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentLength(videoLength);
+//
+//        if (rangeHeader != null && rangeHeader.startsWith("bytes=")) {
+//            String[] rangeValues = rangeHeader.substring(6).split("-");
+//            long start = Long.parseLong(rangeValues[0]);
+//            long end = videoLength - 1;
+//            if (rangeValues.length > 1) {
+//                end = Long.parseLong(rangeValues[1]);
+//            }
+//
+//            InputStream inputStream = new FileInputStream(videoFile);
+//            inputStream.skip(start);
+//            long contentLength = end - start + 1;
+//
+//
+//            headers.add(HttpHeaders.ACCEPT_RANGES, "bytes");
+//            headers.add(HttpHeaders.CONTENT_RANGE, "bytes " + start + "-" + end + "/" + videoLength);
+//            headers.setContentLength(contentLength);
+//            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+//            System.out.println("Retornou pedaços do arquivo");
+//
+//            return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
+//                    .headers(headers)
+//                    .body(new InputStreamResource(inputStream));
+//        }
+//
+//        // Se não houver solicitação de intervalo, retornar o arquivo completo
+//        InputStream inputStream = new FileInputStream(videoFile);
+//        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+//
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .headers(headers)
+//                .body(new InputStreamResource(inputStream));
+//    }
+
+
+
+
+//    @GetMapping("/stream/{filename:.+}")
+//    public ResponseEntity<InputStreamResource> streamVideo(
+//            @PathVariable String filename,
+//            HttpServletRequest request) throws IOException {
+//
+//        File videoFile = new File("upload-dir/" + filename);
+//        if (!videoFile.exists()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        InputStream inputStream = new FileInputStream(videoFile);
+//        FileSystemResource resource = new FileSystemResource(videoFile);
+//
+//        String rangeHeader = request.getHeader(HttpHeaders.RANGE);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentLength(videoFile.length());
+//
+//        if (rangeHeader != null && rangeHeader.startsWith("bytes=")) {
+//            String[] rangeValues = rangeHeader.substring(6).split("-");
+//            long start = Long.parseLong(rangeValues[0]);
+//            long end = videoFile.length() - 1;
+//            if (rangeValues.length > 1) {
+//                end = Long.parseLong(rangeValues[1]);
+//            }
+//
+//            inputStream = new FileInputStream(videoFile);
+//            inputStream.skip(start);
+//
+//            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
+//
+//            headers.add(HttpHeaders.CONTENT_RANGE, "bytes " + start + "-" + end + "/" + videoFile.length());
+//            headers.setContentLength(end - start + 1);
+//        }
+//
+//        return ResponseEntity.status(206)
+//                .headers(headers)
+//                .contentType(MediaType.APPLICATION_OCTET_STREAM) // Define o Content-Type como octet-stream
+//                .body(new InputStreamResource(inputStream));
+//    }
+
+}
