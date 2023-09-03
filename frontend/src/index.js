@@ -1,16 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import RenderVideo from "./RenderVideo";
+import NavBars from "./NavBars";
+
 //import RenderVideo from "./RenderVideo";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RenderVideo />
-  </React.StrictMode>
+      <NavBars/>
+      <div style={{backgroundColor: '#1a1d20'}}>
+        <RenderVideo />
+      </div>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

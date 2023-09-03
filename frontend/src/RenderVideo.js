@@ -1,4 +1,8 @@
 import React, { useEffect, useRef } from 'react';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/esm/Container';
 
 const VideoPlayer = () => {
     const videoRef = useRef(null);
@@ -23,11 +27,26 @@ const VideoPlayer = () => {
     }, []);
 
     return (
-        <div>
-            <video ref={videoRef} controls width="640" height="360">
-                Seu navegador não suporta a tag de vídeo.
-            </video>
-        </div>
+        <Container>
+            <Row xs={1} md={3} className="g-3">
+            {Array.from({ length: 9 }).map((_, idx) => (
+                <Col key={idx}>
+                    <Card bg='dark' style={{color: 'white'}}>
+                        <video ref={videoRef} controls width="100%" style={{borderRadius: 7}}>
+                            Seu navegador não suporta a tag de vídeo.
+                        </video>
+                        <Card.Body>
+                            <Card.Title>Card com Vídeo</Card.Title>
+                            <Card.Text>
+                            Este é um card com um vídeo incorporado. Você pode adicionar
+                            informações adicionais sobre o vídeo aqui.
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            ))}
+            </Row>
+        </Container>
     );
 };
 
