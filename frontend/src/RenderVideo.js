@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/esm/Container';
+import { BsPersonCircle } from 'react-icons/bs';
 
 const VideoPlayer = () => {
     const videoRef = useRef(null);
@@ -36,11 +37,20 @@ const VideoPlayer = () => {
                             Seu navegador não suporta a tag de vídeo.
                         </video>
                         <Card.Body>
-                            <Card.Title>Card com Vídeo</Card.Title>
-                            <Card.Text>
-                            Este é um card com um vídeo incorporado. Você pode adicionar
-                            informações adicionais sobre o vídeo aqui.
-                            </Card.Text>
+                        <div class="row">
+                            <div class="col-auto">
+                                <Card.Title><BsPersonCircle style={{width: 35, height: 35}}/></Card.Title>
+                            </div>
+                            <div class="col">
+                                <Card.Title>Comer muito? ou comer pouco?</Card.Title>
+                                <Card.Text>
+                                    Canal X
+                                    <Card.Text>
+                                    119 mil visualizações há 2 dias
+                                    </Card.Text>
+                                </Card.Text>
+                            </div>
+                        </div>
                         </Card.Body>
                     </Card>
                 </Col>
