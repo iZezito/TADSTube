@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { BsPlayBtnFill, BsSearch, BsHouseDoor, BsCollectionPlay } from 'react-icons/bs';
+import { BsPlayBtnFill, BsSearch, BsHouseDoor, BsCollectionPlay, BsBoxArrowInRight } from 'react-icons/bs';
 
 function Menu() {
   return (
@@ -51,6 +51,7 @@ function Menu() {
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Nav.Link href="#action1"><BsHouseDoor style={{width: 20, height: 20}}/> Início</Nav.Link>
                   <Nav.Link href="#action2"><BsCollectionPlay style={{width: 20, height: 20}}/> Inscrições</Nav.Link>
+                  <Nav.Link href="#action3"><BsBoxArrowInRight style={{width: 20, height: 20}}/> Sair</Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
