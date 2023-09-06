@@ -5,15 +5,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import RenderVideo from "./RenderVideo";
 import NavBars from "./NavBars";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import App from "./App";
 
 //import RenderVideo from "./RenderVideo";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <NavBars/>
       <div style={{backgroundColor: '#1a1d20'}}>
-        <RenderVideo />
+        <App />
       </div>
     </React.StrictMode>
 );

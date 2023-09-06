@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -49,9 +48,9 @@ function Menu() {
                   </div>
                 </Form>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="#action1"><BsHouseDoor style={{width: 20, height: 20}}/> Início</Nav.Link>
+                  <Nav.Link href="/"><BsHouseDoor style={{width: 20, height: 20}}/> Início</Nav.Link>
                   <Nav.Link href="#action2"><BsCollectionPlay style={{width: 20, height: 20}}/> Inscrições</Nav.Link>
-                  <Nav.Link href="#action3"><BsBoxArrowInRight style={{width: 20, height: 20}}/> Sair</Nav.Link>
+                  <Nav.Link href="/cadastrar"><BsBoxArrowInRight style={{width: 20, height: 20}}/> Sair</Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

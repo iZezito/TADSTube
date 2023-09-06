@@ -33,9 +33,7 @@ const VideoPlayer = () => {
             {Array.from({ length: 9 }).map((_, idx) => (
                 <Col key={idx}>
                     <Card bg='dark' style={{color: 'white'}}>
-                        <video ref={videoRef} controls width="100%" style={{borderRadius: 7}}>
-                            Seu navegador não suporta a tag de vídeo.
-                        </video>
+                        <img src={'https://criarestilosnet.com/wp-content/uploads/2020/04/youtube-video-thumbnail-1200x675.jpg'}/>
                         <Card.Body>
                         <div class="row">
                             <div class="col-auto">
