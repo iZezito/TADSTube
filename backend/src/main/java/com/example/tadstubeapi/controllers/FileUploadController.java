@@ -1,4 +1,4 @@
-package com.example.tadstubeapi;
+package com.example.tadstubeapi.controllers;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;

@@ -33,7 +33,7 @@ const VideoPlayer = () => {
             {Array.from({ length: 9 }).map((_, idx) => (
                 <Col key={idx}>
                     <Card bg='dark' style={{color: 'white'}}>
-                        <img src={'https://criarestilosnet.com/wp-content/uploads/2020/04/youtube-video-thumbnail-1200x675.jpg'}/>
+                        <img src={'https://criarestilosnet.com/wp-content/uploads/2020/04/youtube-video-thumbnail-1200x675.jpg'} alt={'thumbnail'}/>
                         <Card.Body>
                         <div class="row">
                             <div class="col-auto">

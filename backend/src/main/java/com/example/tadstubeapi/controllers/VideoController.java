@@ -1,4 +1,4 @@
-package com.example.tadstubeapi;
+package com.example.tadstubeapi.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.FileSystemResource;
