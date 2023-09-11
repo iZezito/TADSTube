@@ -7,6 +7,7 @@ import RenderVideo from "./RenderVideo";
 import NavBars from "./NavBars";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from "./App";
+import './App.css';
 
 //import RenderVideo from "./RenderVideo";
 

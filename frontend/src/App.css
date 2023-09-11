@@ -36,3 +36,95 @@
     transform: rotate(360deg);
   }
 }
+/* grid com 3 partes uma 10% que terá a largura 100% e ficará na parte de cima, e logo abaixo uma de 15% e 85% do restante */
+
+.grid-container {
+    display: grid;
+    grid-template-rows: 10% 1fr; /* 10% de altura na parte superior e restante na parte inferior */
+    grid-template-columns: 15% 85%; /* 15% de largura na parte esquerda e 85% na parte direita */
+    height: 100vh; /* Definindo a altura do container para ocupar toda a altura da janela */
+}
+
+.nav-grid {
+    grid-row: 1 / 2; /* Ocupa a primeira linha (parte superior) */
+    grid-column: 1 / -1; /* Ocupa todas as colunas */
+    background-color: #0032ff; /* Cor de fundo apenas para ilustração */
+}
+
+.side-grid {
+    grid-row: 2 / -1; /* Ocupa da segunda linha até o final */
+    grid-column: 1 / 2; /* Ocupa a primeira coluna (parte esquerda) */
+}
+
+.main {
+    grid-row: 2 / -1; /* Ocupa da segunda linha até o final */
+    grid-column: 2 / -1; /* Ocupa da segunda coluna até o final (parte direita) */
+     /* Cor de fundo apenas para ilustração */
+}
+
+
+/*.grid-container {*/
+/*    display: grid;*/
+/*    grid-template-columns: 15% 85%;*/
+/*    grid-template-rows: 100%;*/
+/*    height: 100vh;*/
+/*}*/
+/*!* parte 20% do grid *!*/
+/*.navgrid{*/
+/*    background-color: #282c34;*/
+/*    color: white;*/
+/*    padding: 20px;*/
+/*    grid-column: 1;*/
+/*    grid-row: 1;*/
+/*}*/
+
+/*.main{*/
+/*    grid-column: 2;*/
+/*    grid-row: 1;*/
+/*}*/
+.toggle{
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .side-grid{
+        display: none;
+    }
+    .toggle{
+      display: block;
+    }
+    .navgrid{
+        display: none;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 10% 90%;
+        height: 100vh;
+    }
+    .main{
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+
+}
+
+::-webkit-scrollbar {
+    width: 4px; /* largura da barra de rolagem */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #212529; /* cor do fundo da barra de rolagem */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #696969; /* cor da barra de rolagem */
+    border-radius: 10px; /* raio dos cantos da barra de rolagem */
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #F5F5F5; /* cor do canto da barra de rolagem */
+}
+
+

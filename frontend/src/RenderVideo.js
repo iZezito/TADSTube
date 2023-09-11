@@ -28,7 +28,8 @@ const VideoPlayer = () => {
     }, []);
 
     return (
-        <Container>
+        <>
+        <Container className={'overflow-auto'}>
             <Row xs={1} md={3} className="g-3">
             {Array.from({ length: 9 }).map((_, idx) => (
                 <Col key={idx}>
@@ -55,6 +56,7 @@ const VideoPlayer = () => {
             ))}
             </Row>
         </Container>
+        </>
     );
 };
 

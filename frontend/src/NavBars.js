@@ -5,12 +5,16 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { BsPlayBtnFill, BsSearch, BsHouseDoor, BsCollectionPlay, BsBoxArrowInRight } from 'react-icons/bs';
+import {Link} from "react-router-dom";
+import {BiExit, BiNews, BiUserCircle} from "react-icons/bi";
+import {GiAcousticMegaphone, GiLoveLetter} from "react-icons/gi";
 
 function Menu() {
   return (
     <>
       {[false].map((expand) => (
-        <Navbar key={expand} expand={expand} className="bg-dark mb-3"  bg="dark" data-bs-theme="dark">
+          <>
+        <Navbar key={expand} expand={expand} className="bg-dark mb-3 nav-grid"  bg="dark" data-bs-theme="dark">
           <Container fluid>
             <Navbar.Brand href="#" style={{color: 'white'}}><BsPlayBtnFill style={{width: 30, height: 30, color: 'red'}}/> TADStube</Navbar.Brand>
             <Form className="d-none d-md-block d-lg-block" style={{ width: 900 }} id={`offcanvasNavbar-expand-${expand}`}>
@@ -24,7 +28,7 @@ function Menu() {
                 <Button variant="outline-secondary"><BsSearch /></Button>
               </div>
             </Form>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} className={'toggle'} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
@@ -36,13 +40,13 @@ function Menu() {
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body className='bg-dark text-light'>
-                <Form className="d-block d-md-none d-lg-none mt-3"id={`offcanvasNavbar-expand-${expand}`}>
+                <Form className="d-block d-md-none d-lg-none mt-3" id={`offcanvasNavbar-expand-${expand}`}>
                   <div className="d-flex">
                     <Form.Control
-                      type="search"
-                      placeholder="Pesquisar"
-                      className="me-1 flex-grow-1"
-                      aria-label="Search"
+                        type="search"
+                        placeholder="Pesquisar"
+                        className="me-1 flex-grow-1"
+                        aria-label="Search"
                     />
                     <Button variant="outline-secondary"><BsSearch /></Button>
                   </div>
@@ -56,6 +60,7 @@ function Menu() {
             </Navbar.Offcanvas>
           </Container>
         </Navbar>
+          </>
       ))}
     </>
   );
