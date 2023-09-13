@@ -1,9 +1,16 @@
 package com.example.tadstubeapi.model;
 
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.sql.Timestamp;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "Visualizacao")
 public class Visualizacao {
 

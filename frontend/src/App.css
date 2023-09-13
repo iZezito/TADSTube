@@ -48,12 +48,13 @@
 .nav-grid {
     grid-row: 1 / 2; /* Ocupa a primeira linha (parte superior) */
     grid-column: 1 / -1; /* Ocupa todas as colunas */
-    background-color: #0032ff; /* Cor de fundo apenas para ilustração */
+    /* Cor de fundo apenas para ilustração */
 }
 
 .side-grid {
     grid-row: 2 / -1; /* Ocupa da segunda linha até o final */
-    grid-column: 1 / 2; /* Ocupa a primeira coluna (parte esquerda) */
+    grid-column: 1 / 2;
+    /* Ocupa a primeira coluna (parte esquerda) */
 }
 
 .main {

@@ -1,9 +1,14 @@
 package com.example.tadstubeapi.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.sql.Timestamp;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "Canal")
 public class Canal {

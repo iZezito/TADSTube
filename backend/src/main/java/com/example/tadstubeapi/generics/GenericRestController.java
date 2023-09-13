@@ -1,14 +1,9 @@
-package com.example.spotted.controllers;
+package com.example.tadstubeapi.generics;
 
-import com.example.spotted.domain.Comentario;
-import com.example.spotted.domain.Noticia;
-import com.example.spotted.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 
@@ -18,8 +13,8 @@ public abstract class GenericRestController<T> {
 
     @PostMapping
     public T insert(@RequestBody T t) {
-        service.save(t);
-        return t;
+        return service.save(t);
+
     }
 
     @GetMapping(path = "/{id}")

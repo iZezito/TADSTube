@@ -1,8 +1,14 @@
 package com.example.tadstubeapi.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "Usuario")
 public class Usuario {
 

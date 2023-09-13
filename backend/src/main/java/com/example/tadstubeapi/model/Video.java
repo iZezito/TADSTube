@@ -1,9 +1,16 @@
 package com.example.tadstubeapi.model;
 
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.sql.Timestamp;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "Video")
 public class Video {
 
@@ -30,6 +37,9 @@ public class Video {
 
     @Column(name = "Likes")
     private Integer likes;
+
+    private String url;
+
 
     // Getters, setters e construtores
 }
