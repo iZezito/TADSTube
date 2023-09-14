@@ -1,6 +1,7 @@
 package com.example.tadstubeapi.model;
 
 import jakarta.persistence.*;
+import com.example.tadstubeapi.usuario.Usuario;
 import lombok.*;
 
 import java.sql.Timestamp;
