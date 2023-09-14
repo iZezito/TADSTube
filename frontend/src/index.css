@@ -12,3 +12,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.min-width-form {
+  min-width: 600px; /* Definindo uma largura mínima de 400 pixels */
+}

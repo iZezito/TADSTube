@@ -5,20 +5,18 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { BsPlayBtnFill, BsSearch, BsHouseDoor, BsCollectionPlay, BsBoxArrowInRight } from 'react-icons/bs';
-import {Link} from "react-router-dom";
-import {BiExit, BiNews, BiUserCircle} from "react-icons/bi";
-import {GiAcousticMegaphone, GiLoveLetter} from "react-icons/gi";
+import './App.css'; 
 
 function Menu() {
   return (
     <>
       {[false].map((expand) => (
           <>
-        <Navbar key={expand} expand={expand} className="bg-dark mb-3 nav-grid"  bg="dark" data-bs-theme="dark">
+        <Navbar key={expand} expand={expand} className="bg-dark mb-2 nav-grid"  bg="dark" data-bs-theme="dark">
           <Container fluid>
             <Navbar.Brand href="#" style={{color: 'white'}}><BsPlayBtnFill style={{width: 30, height: 30, color: 'red'}}/> TADStube</Navbar.Brand>
-            <Form className="d-none d-md-block d-lg-block" style={{ width: 900 }} id={`offcanvasNavbar-expand-${expand}`}>
-              <div className="d-flex">
+            <Form className="d-none d-md-block d-lg-block mx-auto text-center min-width-form" id={`offcanvasNavbar-expand-${expand}`}>
+              <div className="d-flex" style={{}}>
                 <Form.Control
                   type="search"
                   placeholder="Pesquisar"

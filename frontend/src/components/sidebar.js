@@ -1,11 +1,8 @@
 import React from "react";
 import Nav from "react-bootstrap/Nav";
 import {Link} from "react-router-dom";
-import {BiExit, BiNews, BiUserCircle} from "react-icons/bi";
-import {GiAcousticMegaphone, GiLoveLetter} from "react-icons/gi";
 import {BsBoxArrowInRight, BsCollectionPlay, BsHouseDoor} from "react-icons/bs";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Inscricao from "./inscricao";
 
 export default function Sidebar(){
     return(
@@ -21,9 +18,18 @@ export default function Sidebar(){
                 {/*</Row>*/}
 
 
-                <Link to={'/perfil'} className={'nav-link text-light'}><BsHouseDoor style={{ width: 20, height: 20 }} />Início</Link>
+                <Link to={'/perfil'} className={'nav-link text-light'}><BsHouseDoor style={{ width: 20, height: 20 }} /> Início</Link>
                 <Link to={'/'} className={'nav-link text-light'}><BsCollectionPlay style={{ width: 20, height: 20 }} /> Inscrições</Link>
+                <hr className="my-2" style={{ borderColor: 'white' }} />
+                <Link className={'nav-link text-light h1'}>Inscrições</Link>
+                <div className={'overflow-auto'} style={{ maxHeight: '300px' }}>
+                    {Array.from({ length: 19 }).map((_, idx) => (
+                        <Inscricao key={idx}/>
+                    ))}
+                </div>
+                <hr className="my-2" style={{ borderColor: 'white' }} />
                 <Link to={'/sair'} className={'nav-link text-light'}><BsBoxArrowInRight style={{ width: 20, height: 20 }} /> Sair</Link>
+                
             </Nav>
         </div>
     )
