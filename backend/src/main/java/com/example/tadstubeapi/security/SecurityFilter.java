@@ -1,6 +1,7 @@
 package com.example.tadstubeapi.security;
 
-import com.example.spotted.domain.usuario.UsuarioRepository;
+
+import com.example.tadstubeapi.usuario.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,5 +1,8 @@
 package com.example.tadstubeapi.controllers;
 
+import com.example.tadstubeapi.model.Video;
+import com.example.tadstubeapi.service.VideoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,27 +18,18 @@ import java.io.IOException;
 @CrossOrigin(origins = "*")
 public class FileUploadController {
 
+    @Autowired
+    public VideoService service;
+
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("videoData")Video video) {
         System.out.println("Recebendo arquivo: " + file.getOriginalFilename());
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("Arquivo vazio");
         }
 
         try {
-            // Crie um diretório temporário para armazenar o arquivo
-            File uploadDir = new File("upload-dir");
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-
-            // retirar caracteres especiais do nome do arquivo
-            String filename = file.getOriginalFilename().replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
-
-            // Salve o arquivo no diretório temporário
-            File dest = new File(uploadDir.getAbsolutePath() + File.separator + filename);
-            file.transferTo(dest);
-
+            video.setUrl(service.armazenarVideo(file));
             return ResponseEntity.ok("Arquivo enviado com sucesso.");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Falha ao enviar o arquivo.");
