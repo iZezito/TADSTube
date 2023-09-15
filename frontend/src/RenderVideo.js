@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/esm/Container';
 import { BsPersonCircle } from 'react-icons/bs';
+import Painel from './components/painelcanal';
 
 const VideoPlayer = () => {
     const videoRef = useRef(null);
@@ -30,6 +31,10 @@ const VideoPlayer = () => {
     return (
         <>
         <Container className={'overflow-auto'}>
+            <Painel/>
+            <br/>
+            <h4 className='text-light'>Vídeos</h4>
+            <hr className="my-2" style={{ borderColor: 'white' }} />
             <Row xs={1} md={3} className="g-3">
             {Array.from({ length: 9 }).map((_, idx) => (
                 <Col key={idx}>
