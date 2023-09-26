@@ -1,9 +1,14 @@
-import React from "react";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { BsPersonCircle, BsBell } from 'react-icons/bs';
+import React, { useEffect, useRef, useState } from 'react';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/esm/Container';
+import { BsPersonCircle, BsBell, BsBellFill } from 'react-icons/bs';
 
 export default function Painel() {
+    const [inscrito, setInscrito] = useState(false)
+
     return (
         <>  
             <Card bg='dark' style={{color: 'white'}}>
@@ -14,12 +19,9 @@ export default function Painel() {
                         <Card.Title><BsPersonCircle style={{width: 100, height: 100}}/></Card.Title>
                     </div>
                     <div class="col">
-                        <Card.Title>Comer muito? ou comer pouco?</Card.Title>
+                        <Card.Title>Canal X</Card.Title>
                         <Card.Text>
-                            Canal X
-                            <Card.Text>
                             @CanalX 119 mil inscritos 2,3 mil vídeos
-                            </Card.Text>
                         </Card.Text>
                         <Card.Text>
                             Venha aprender!
@@ -27,11 +29,38 @@ export default function Painel() {
                     </div>
                     <div class="col"></div>
                     <div class="col">
-                        <Button variant="outline-light" className="justify-content-center" style={{borderRadius: 100}}><BsBell/> Inscrito</Button>
+                        {inscrito ? (
+                            <Button variant="outline-light" onClick={() => setInscrito(false)} className="justify-content-center" style={{borderRadius: 100}}><BsBellFill/> Inscrito</Button>
+                        ) : (
+                            <Button variant="outline-light" onClick={() => setInscrito(true)} className="justify-content-center" style={{borderRadius: 100}}><BsBell/> Inscrever-se</Button>
+                        )}
                     </div>
                 </div>
                 </Card.Body>
             </Card>
+            <Container className={'overflow-auto mt-4'}>
+            <h4 className='text-light'>Vídeos</h4>
+            <hr className="my-2" style={{ borderColor: 'white' }} />
+            <Row xs={1} md={3} className="g-3">
+            {Array.from({ length: 9 }).map((_, idx) => (
+                <Col key={idx}>
+                    <Card bg='dark' style={{color: 'white'}}>
+                        <img src={'https://criarestilosnet.com/wp-content/uploads/2020/04/youtube-video-thumbnail-1200x675.jpg'} alt={'thumbnail'}/>
+                        <Card.Body>
+                        <div class="row">
+                            <div class="col">
+                                <Card.Title>Comer muito? ou comer pouco?</Card.Title>
+                                <Card.Text>
+                                    119 mil visualizações há 2 dias
+                                </Card.Text>
+                            </div>
+                        </div>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            ))}
+            </Row>
+        </Container>
         </>
     )
 }

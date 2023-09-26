@@ -4,6 +4,9 @@ import LoginForm from "./LoginForm";
 import RenderVideo from "./RenderVideo";
 import NavBars from "./NavBars";
 import Sidebar from "./components/sidebar";
+import Painel from "./components/PainelCanal";
+import FileUpload from "./screens/FileUpload";
+import NotFoundPage from "./screens/PaginaNaoEncontrada"
 
 export default function App() {
     return (
@@ -13,9 +16,12 @@ export default function App() {
                 <NavBars/>
                 <div className={'main overflow-auto'}>
                     <Routes>
-                        <Route path="/" element={<RenderVideo/>}/>
-                        <Route path="/about" element={<h1>About!</h1>}/>
-                        <Route path="/sair" element={<LoginForm/>}/>
+                        <Route exact path="/" element={<RenderVideo/>}/>
+                        <Route exact path="/about" element={<h1>About!</h1>}/>
+                        <Route exact path="/sair" element={<LoginForm/>}/>
+                        <Route exact path={'/upload'} element={<FileUpload />} />
+                        <Route exact path="/canal" element={<Painel />} />
+                        <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </div>
 

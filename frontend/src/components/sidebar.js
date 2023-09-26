@@ -18,9 +18,9 @@ export default function Sidebar(){
                 {/*</Row>*/}
 
 
-                <Link to={'/perfil'} className={'nav-link text-light'}><BsHouseDoor style={{ width: 20, height: 20 }} /> Início</Link>
-                <Link to={'/'} className={'nav-link text-light'}><BsCollectionPlay style={{ width: 20, height: 20 }} /> Inscrições</Link>
-                <Link to={'/'} className={'nav-link text-light'}><BsPlayBtn style={{ width: 20, height: 20 }}/> Enviar vídeo</Link>
+                <Link to={'/'} className={'nav-link text-light'}><BsHouseDoor style={{ width: 20, height: 20 }} /> Início</Link>
+                <Link to={'/canal'} className={'nav-link text-light'}><BsCollectionPlay style={{ width: 20, height: 20 }} /> Inscrições</Link>
+                <Link to={'/upload'} className={'nav-link text-light'}><BsPlayBtn style={{ width: 20, height: 20 }}/> Enviar vídeo</Link>
                 <hr className="my-2" style={{ borderColor: 'white' }} />
                 <Link className={'nav-link text-light h1'}>Inscrições</Link>
                 <div className={'overflow-auto'} style={{ maxHeight: '290px' }}>
