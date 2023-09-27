@@ -26,38 +26,38 @@ public class UsuarioController {
         service.save(usuario);
     }
 
-    @PostMapping("/matricula")
-    public String insertMatricula(@RequestParam("file") MultipartFile file){
-        try {
-            PDDocument document = PDDocument.load(file.getInputStream());
-            PDFTextStripper textStripper = new PDFTextStripper();
-            String text = textStripper.getText(document);
-            document.close();
-            String regex = "sob o número\\s*(\\d+)";
-
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(text);
-            System.out.println(text);
-
-            if (matcher.find()) {
-                String matricula = matcher.group(1);
-                System.out.println("Número: " + matricula);
-                Usuario usuario = service.findByMatricula(matricula);
-                if(usuario != null){
-                    return "Usuário já cadastrado";
-                }else{
-                    return "Matrícula válida/"+matricula;
-                }
-            } else {
-                System.out.println("Número não encontrado.");
-                return "Matrícula inválida, informe o comprovante de matrícula.";
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Por favor, selecione um arquivo válido.";
-        }
-    }
+//    @PostMapping("/matricula")
+//    public String insertMatricula(@RequestParam("file") MultipartFile file){
+//        try {
+//            PDDocument document = PDDocument.load(file.getInputStream());
+//            PDFTextStripper textStripper = new PDFTextStripper();
+//            String text = textStripper.getText(document);
+//            document.close();
+//            String regex = "sob o número\\s*(\\d+)";
+//
+//            Pattern pattern = Pattern.compile(regex);
+//            Matcher matcher = pattern.matcher(text);
+//            System.out.println(text);
+//
+//            if (matcher.find()) {
+//                String matricula = matcher.group(1);
+//                System.out.println("Número: " + matricula);
+//                Usuario usuario = service.findByMatricula(matricula);
+//                if(usuario != null){
+//                    return "Usuário já cadastrado";
+//                }else{
+//                    return "Matrícula válida/"+matricula;
+//                }
+//            } else {
+//                System.out.println("Número não encontrado.");
+//                return "Matrícula inválida, informe o comprovante de matrícula.";
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return "Por favor, selecione um arquivo válido.";
+//        }
+//    }
 
     @GetMapping("/login/{login}")
     public String login(@PathVariable String login){

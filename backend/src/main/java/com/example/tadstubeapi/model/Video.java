@@ -1,5 +1,6 @@
 package com.example.tadstubeapi.model;
 
+import com.example.tadstubeapi.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,18 +26,12 @@ public class Video {
     @Column(name = "Descricao")
     private String descricao;
 
-    @Column(name = "Tags")
-    private String[] tags;
-
     @Column(name = "DataUpload")
     private Timestamp dataUpload;
 
     @ManyToOne
     @JoinColumn(name = "IDCanal")
-    private Canal canal;
-
-    @Column(name = "Likes")
-    private Integer likes;
+    private Usuario usuario;
 
     private String url;
 

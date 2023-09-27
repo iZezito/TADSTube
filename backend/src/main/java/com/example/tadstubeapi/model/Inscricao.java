@@ -27,10 +27,12 @@ public class Inscricao {
 
     @ManyToOne
     @JoinColumn(name = "IDCanal")
-    private Canal canal;
+    private Usuario usuario; // Agora, IDCanal é uma referência ao próprio usuário como canal
 
     @Column(name = "DataInscricao")
     private Timestamp dataInscricao;
+
+
 
     // Getters, setters e construtores
 }

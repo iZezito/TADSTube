@@ -26,4 +26,9 @@ public class VideoService extends GenericService<Video> {
         return dest.getAbsolutePath();
     }
 
+    public File getVideo(String url) throws IOException {
+        File file = new File("upload-dir/" + url);
+        return file;
+    }
+
 }

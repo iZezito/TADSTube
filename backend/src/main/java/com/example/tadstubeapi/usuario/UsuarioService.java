@@ -16,10 +16,6 @@ public class UsuarioService {
 
     }
 
-    public Usuario findByMatricula(String matricula){
-        return repository.findByMatricula(matricula);
-    }
-
     public Usuario findByLogin(String login){
         return (Usuario) repository.findByLogin(login);
     }
