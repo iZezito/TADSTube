@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/esm/Container';
 import { BsPersonCircle } from 'react-icons/bs';
-import Painel from './components/PainelCanal';
+import Painel from '../components/PainelCanal';
 
 const VideoPlayer = () => {
     const videoRef = useRef(null);

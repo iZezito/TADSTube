@@ -1,31 +1,38 @@
 import React from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import LoginForm from "./LoginForm";
-import RenderVideo from "./RenderVideo";
+import LoginForm from "./screens/LoginForm";
+import RenderVideo from "./screens/RenderVideo";
 import NavBars from "./NavBars";
 import Sidebar from "./components/sidebar";
 import Painel from "./components/PainelCanal";
 import FileUpload from "./screens/FileUpload";
 import NotFoundPage from "./screens/PaginaNaoEncontrada"
+import {observer} from "mobx-react";
+import AuthStore from "./store/AuthStore";
 
-export default function App() {
+const App = observer(() => {
+    const {isAuthenticated} = AuthStore;
+    console.log(isAuthenticated);
+
     return (
         <div className={'grid-container'}>
             <BrowserRouter>
-                <Sidebar/>
-                <NavBars/>
+                { isAuthenticated && <Sidebar/> }
+                { isAuthenticated && <NavBars/> }
                 <div className={'main overflow-auto'}>
                     <Routes>
-                        <Route exact path="/" element={<RenderVideo/>}/>
-                        <Route exact path="/about" element={<h1>About!</h1>}/>
-                        <Route exact path="/sair" element={<LoginForm/>}/>
-                        <Route exact path={'/upload'} element={<FileUpload />} />
-                        <Route exact path="/canal" element={<Painel />} />
-                        <Route path="*" element={<NotFoundPage />} />
+                        {isAuthenticated && <Route exact path="/" element={<RenderVideo/>}/>}
+                        {isAuthenticated && <Route exact path="/about" element={<h1>About!</h1>}/>}
+                        {!isAuthenticated && <Route exact path="*" element={<LoginForm/>}/>}
+                        {isAuthenticated && <Route exact path={'/upload'} element={<FileUpload />} />}
+                        {isAuthenticated && <Route exact path="/canal" element={<Painel />} />}
+                        {isAuthenticated && <Route path="*" element={<NotFoundPage />} />}
                     </Routes>
                 </div>
 
             </BrowserRouter>
         </div>
     )
-}
+});
+
+export default App;

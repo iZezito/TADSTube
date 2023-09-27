@@ -30,9 +30,9 @@ public class FileUploadController {
 
         try {
             video.setUrl(service.armazenarVideo(file));
-            return ResponseEntity.ok("Arquivo enviado com sucesso.");
+            return ResponseEntity.ok("Vídeo enviado com sucesso!");
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Falha ao enviar o arquivo.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Falha ao enviar o vídeo.");
         }
     }
 
