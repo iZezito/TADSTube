@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from "react-bootstrap/Nav";
 import {Link} from "react-router-dom";
-import {BsBoxArrowInRight, BsCollectionPlay, BsHouseDoor, BsPlayBtn} from "react-icons/bs";
+import {BsBoxArrowInRight, BsPersonSquare, BsHouseDoor, BsPlayBtn} from "react-icons/bs";
 import Inscricao from "./inscricao";
 
 export default function Sidebar(){
@@ -19,7 +19,7 @@ export default function Sidebar(){
 
 
                 <Link to={'/'} className={'nav-link text-light'}><BsHouseDoor style={{ width: 20, height: 20 }} /> Início</Link>
-                <Link to={'/canal'} className={'nav-link text-light'}><BsCollectionPlay style={{ width: 20, height: 20 }} /> Inscrições</Link>
+                <Link to={'/canal'} className={'nav-link text-light'}><BsPersonSquare style={{ width: 20, height: 20 }} /> Seu canal</Link>
                 <Link to={'/upload'} className={'nav-link text-light'}><BsPlayBtn style={{ width: 20, height: 20 }}/> Enviar vídeo</Link>
                 <hr className="my-2" style={{ borderColor: 'white' }} />
                 <Link className={'nav-link text-light h1'}>Inscrições</Link>

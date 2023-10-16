@@ -53,6 +53,9 @@
 //
 import React, { useState } from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
 
 function FileUpload() {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -93,11 +96,29 @@ function FileUpload() {
     };
 
     return (
-        <div>
-            <input type="file" onChange={handleFileChange} />
-            <button onClick={handleUpload}>Enviar</button>
-            {uploadProgress > 0 && <p>Progresso: {uploadProgress}%</p>}
-        </div>
+        <Card className="text-light bg-dark" style={{width: 500, marginLeft: 'auto', marginRight: 'auto', marginTop: 200}}>
+            <Card.Header style={{marginLeft: 'auto', marginRight: 'auto'}}>Enviar vídeo</Card.Header>
+            <Card.Body>
+                <Form.Group  onChange={handleFileChange} controlId="formFile" className="mb-3 bg-dark" style={{width: 465}}>
+                <Form.Label>Vídeo</Form.Label>
+                    <Form.Control type="file" />
+                </Form.Group>
+                <Form.Group  onChange={handleFileChange} controlId="formFile" className="mb-3 bg-dark" style={{width: 465}}>
+                    <Form.Label>Thumbnail</Form.Label>
+                    <Form.Control type="file" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Título</Form.Label>
+                    <Form.Control as="textarea" rows={1} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Descrição</Form.Label>
+                    <Form.Control as="textarea" rows={3} />
+                </Form.Group>
+                <Button variant="primary" onClick={handleUpload}>Enviar</Button>
+                {uploadProgress > 0 && <p>Progresso: {uploadProgress}%</p>}
+            </Card.Body>
+        </Card>
     );
 }
 
