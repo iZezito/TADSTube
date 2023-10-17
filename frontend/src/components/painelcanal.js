@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/esm/Container';
 import { BsPersonCircle, BsBell, BsBellFill } from 'react-icons/bs';
+import {Link} from "react-router-dom";
 
 export default function Painel() {
     const [inscrito, setInscrito] = useState(false)
@@ -44,19 +45,21 @@ export default function Painel() {
             <Row xs={1} md={3} className="g-3">
             {Array.from({ length: 9 }).map((_, idx) => (
                 <Col key={idx}>
-                    <Card bg='dark' style={{color: 'white'}}>
-                        <img src={'https://criarestilosnet.com/wp-content/uploads/2020/04/youtube-video-thumbnail-1200x675.jpg'} alt={'thumbnail'}/>
-                        <Card.Body>
-                        <div class="row">
-                            <div class="col">
-                                <Card.Title>Comer muito? ou comer pouco?</Card.Title>
-                                <Card.Text>
-                                    119 mil visualizações há 2 dias
-                                </Card.Text>
+                    <Link to={'/view'} className='text-decoration-none'>
+                        <Card bg='dark' style={{color: 'white'}}>
+                            <img src={'https://criarestilosnet.com/wp-content/uploads/2020/04/youtube-video-thumbnail-1200x675.jpg'} alt={'thumbnail'}/>
+                            <Card.Body>
+                            <div class="row">
+                                <div class="col">
+                                    <Card.Title>Comer muito? ou comer pouco?</Card.Title>
+                                    <Card.Text>
+                                        119 mil visualizações há 2 dias
+                                    </Card.Text>
+                                </div>
                             </div>
-                        </div>
-                        </Card.Body>
-                    </Card>
+                            </Card.Body>
+                        </Card>
+                    </Link>
                 </Col>
             ))}
             </Row>

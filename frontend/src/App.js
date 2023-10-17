@@ -9,6 +9,7 @@ import FileUpload from "./screens/FileUpload";
 import NotFoundPage from "./screens/PaginaNaoEncontrada"
 import {observer} from "mobx-react";
 import AuthStore from "./store/AuthStore";
+import ViewVideo from "./components/ViwVideo";
 
 const App = observer(() => {
     const {isAuthenticated} = AuthStore;
@@ -27,6 +28,7 @@ const App = observer(() => {
                         {isAuthenticated && <Route exact path={'/upload'} element={<FileUpload />} />}
                         {isAuthenticated && <Route exact path="/canal" element={<Painel />} />}
                         {isAuthenticated && <Route path="*" element={<NotFoundPage />} />}
+                        {isAuthenticated && <Route path="/view" element={<ViewVideo />} />}
                     </Routes>
                 </div>
 
