@@ -3,6 +3,8 @@ package com.example.tadstubeapi.controllers;
 import com.example.tadstubeapi.generics.GenericRestController;
 import com.example.tadstubeapi.model.Video;
 import com.example.tadstubeapi.service.VideoService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -27,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.io.DataInput;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +38,8 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/videos")
@@ -45,14 +50,25 @@ public class VideoController extends GenericRestController<Video> {
         public VideoService service;
 
         @PostMapping("/upload")
-        public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("videoData") Video video) {
+        public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("videoData") Video video, @RequestParam("thumbnail") MultipartFile thumbnail) {
+            // Converter a string JSON de videoData que é o objeto 'video' para o objeto do tipo Video
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                video = mapper.readValue((DataInput) video, Video.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
             System.out.println("Recebendo arquivo: " + file.getOriginalFilename());
+            System.out.println("Recebendo arquivo: " + thumbnail.getOriginalFilename());
             if (file.isEmpty()) {
                 return ResponseEntity.badRequest().body("Arquivo vazio");
             }
 
             try {
-                video.setUrl(service.armazenarVideo(file));
+                video.setUrl(service.armazenarVideo(file, video.getUsuario().getId()));
+                video.setThumbnail(service.armazenarThumbnail(thumbnail));
                 service.save(video);
                 return ResponseEntity.ok("Vídeo enviado com sucesso!");
             } catch (IOException e) {
@@ -60,14 +76,15 @@ public class VideoController extends GenericRestController<Video> {
             }
         }
 
-        @GetMapping("/download/{filename:.+}")
-        public ResponseEntity<Resource> downloadVideo(@PathVariable String filename) {
-            File file = new File("upload-dir/" + filename);
+        @GetMapping("/download/{id:.+}")
+        public ResponseEntity<Resource> downloadVideo(@PathVariable Long id) {
+            Video video = service.getById(id);
+            File file = new File("upload-dir/" + video.getUrl());
             if (file.exists()) {
                 Resource resource = new FileSystemResource(file);
 
                 return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + video.getUrl() + "\"")
                         .body(resource);
             } else {
                 return ResponseEntity.notFound().build();

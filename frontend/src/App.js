@@ -4,7 +4,7 @@ import LoginForm from "./screens/LoginForm";
 import RenderVideo from "./screens/RenderVideo";
 import NavBars from "./NavBars";
 import Sidebar from "./components/sidebar";
-import Painel from "./components/PainelCanal";
+import Painel from "./components/painelcanal";
 import FileUpload from "./screens/FileUpload";
 import NotFoundPage from "./screens/PaginaNaoEncontrada"
 import {observer} from "mobx-react";
