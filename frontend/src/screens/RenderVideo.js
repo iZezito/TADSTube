@@ -5,27 +5,29 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/esm/Container';
 import { BsPersonCircle } from 'react-icons/bs';
 import Painel from '../components/painelcanal';
+import VideoCard from '../components/VideoCard';
+import store from '../store/VideoStore';
 
 const VideoPlayer = () => {
     const videoRef = useRef(null);
 
     useEffect(() => {
-        const filename = 'Alugamos_um_CARRO_de_TR_S_RODAS___.mp4'; // Substitua pelo nome do vídeo que você deseja reproduzir
+        // const filename = 'Alugamos_um_CARRO_de_TR_S_RODAS___.mp4'; // Substitua pelo nome do vídeo que você deseja reproduzir
 
-        fetch(`http://localhost:8080/stream/${filename}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.blob();
-            })
-            .then(videoBlob => {
-                const videoUrl = URL.createObjectURL(videoBlob);
-                videoRef.current.src = videoUrl;
-            })
-            .catch(error => {
-                console.error('Error fetching video:', error);
-            });
+        // fetch(`http://localhost:8080/stream/${filename}`)
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+        //         return response.blob();
+        //     })
+        //     .then(videoBlob => {
+        //         const videoUrl = URL.createObjectURL(videoBlob);
+        //         videoRef.current.src = videoUrl;
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching video:', error);
+        //     });
     }, []);
 
     return (
@@ -34,33 +36,13 @@ const VideoPlayer = () => {
             <h1 className='text-light'>
                 Ainda não á vídeo cadastrado!
             </h1>
-            {/* <h4 className='text-light'>Vídeos</h4>
+            <h4 className='text-light'>Vídeos</h4>
             <hr className="my-2" style={{ borderColor: 'white' }} />
             <Row xs={1} md={3} className="g-3">
-            {Array.from({ length: 9 }).map((_, idx) => (
-                <Col key={idx}>
-                    <Card bg='dark' style={{color: 'white'}}>
-                        <img src={'https://criarestilosnet.com/wp-content/uploads/2020/04/youtube-video-thumbnail-1200x675.jpg'} alt={'thumbnail'}/>
-                        <Card.Body>
-                        <div class="row">
-                            <div class="col-auto">
-                                <Card.Title><BsPersonCircle style={{width: 35, height: 35}}/></Card.Title>
-                            </div>
-                            <div class="col">
-                                <Card.Title>Comer muito? ou comer pouco?</Card.Title>
-                                <Card.Text>
-                                    Canal X
-                                    <Card.Text>
-                                    119 mil visualizações há 2 dias
-                                    </Card.Text>
-                                </Card.Text>
-                            </div>
-                        </div>
-                        </Card.Body>
-                    </Card>
-                </Col>
+            {store.videos.map((item) => (
+                <VideoCard key={item.id} {...item} />
             ))}
-            </Row> */}
+            </Row>
         </Container>
         </>
     );

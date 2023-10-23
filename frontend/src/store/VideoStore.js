@@ -2,7 +2,6 @@ import api from "../service/Configuration";
 import {makeAutoObservable} from "mobx";
 import AuthStore from "./AuthStore";
 import store from "./Store";
-import axios from "axios";
 
 class VideoStore {
 
@@ -16,6 +15,7 @@ class VideoStore {
         constructor() {
             makeAutoObservable(this);
             this.idUser = localStorage.getItem('idUser');
+            this.getVideos()
         }
 
         getVideos() {
@@ -73,7 +73,7 @@ class VideoStore {
             
 
             try {
-                const response = await axios.post('http://10.77.115.210:8080/videos/upload', formData, {
+                const response = await api.post('/videos/upload', formData, {
                     headers: {
                         // Adicione quaisquer cabeçalhos necessários aqui
                         'Content-Type': 'multipart/form-data',
@@ -94,6 +94,21 @@ class VideoStore {
                 console.error('Erro durante o upload:', error);
             }
         };
+
+        setVideos(videos){
+            this.videos = videos
+        }
+
+
+        getVideos(){
+            console.log('token', AuthStore.getToken)
+            api.get('/videos',{headers:{
+                'Authorization':'Bearer ' + AuthStore.getToken
+            }}).then((response) => {
+                this.setVideos(response.data)
+                console.log(response.data)
+            }).catch((e) => console.log(e))
+        }
 }
 
 const videoStore = new VideoStore();
