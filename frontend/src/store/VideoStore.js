@@ -6,12 +6,15 @@ import store from "./Store";
 class VideoStore {
 
         videos = []
+        editing = false
+        videosOfCanal = []
         idUser = null
         videoData = { titulo: '', descricao: '', usuario: { id: undefined }, dataUpload: new Date()}
         file = undefined
         thumbnail = undefined
         uploadProgress = 0
         thumbURL = undefined
+        videoEdit = { id: undefined, titulo: '', descricao: '', usuario: { id: undefined }, dataUpload: new Date()}
         constructor() {
             makeAutoObservable(this);
             this.idUser = localStorage.getItem('idUser');
@@ -97,6 +100,50 @@ class VideoStore {
         setVideos(videos){
             this.videos = videos
         }
+
+        getVideosOfCanal() {
+            api.get('videos/canal/' + this.idUser, {
+                headers: {
+                    'Authorization': 'Bearer ' + AuthStore.getToken
+                }
+            }).then((response) => {
+                this.videosOfCanal = response.data
+            }).catch((erro) => {
+                if (erro.response.status === 403) {
+                    AuthStore.logout();
+                }
+            })
+        }
+
+        setVideoEdit(videoEdit) {
+            this.videoEdit = videoEdit;
+            this.editing = true;
+        }
+
+        setTituloEdit(titulo) {
+            this.videoEdit.titulo = titulo;
+        }
+
+        setDescricaoEdit(descricao) {
+            this.videoEdit.descricao = descricao;
+        }
+
+        handleEdit = async () => {
+            this.videoEdit.usuario = { id: Number(this.idUser)}
+            api.put('/videos', this.videoEdit, {
+                headers: {
+                    'Authorization': 'Bearer ' + AuthStore.getToken
+                }
+            }).then((response) => {
+                this.editing = false;
+            }).catch((erro) => {
+                if (erro.response.status === 403) {
+                    AuthStore.logout();
+                }
+            })
+        }
+
+
 }
 
 const videoStore = new VideoStore();

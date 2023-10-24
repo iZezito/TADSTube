@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import Card from 'react-bootstrap/Card';
-import { BsPersonCircle } from 'react-icons/bs';
 import Col from 'react-bootstrap/Col';
 import api from "../service/Configuration";
+import {BsPersonCircle, BsBell, BsBellFill, BsPencil, BsXLg } from 'react-icons/bs';
 
-const VideoCard = ({titulo, descricao, thumbnail}) =>{
+const VideoCard = ({titulo, descricao, thumbnail, usuario}) => {
 
     return (
         <Col>
@@ -18,7 +18,7 @@ const VideoCard = ({titulo, descricao, thumbnail}) =>{
                             <div class="col">
                                 <Card.Title>{titulo}</Card.Title>
                                 <Card.Text>
-                                    Canal X
+                                    {usuario?.login}
                                     <Card.Text>
                                     119 mil visualizações há 2 dias
                                     </Card.Text>

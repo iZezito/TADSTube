@@ -38,6 +38,7 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -75,6 +76,14 @@ public class VideoController extends GenericRestController<Video> {
             } catch (IOException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Falha ao enviar o vídeo.");
             }
+        }
+
+        @GetMapping("/canal/{id}")
+        public ResponseEntity<List<Video>> getVideosByUser(@PathVariable Long id) {
+            List<Video> videos = service.getVideosByUser(id);
+            if(videos.isEmpty())
+                return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(videos);
         }
 
 //        @GetMapping("/download/{id:.+}")

@@ -60,8 +60,6 @@ import videoStore from "../store/VideoStore";
 import {observer} from "mobx-react";
 
 const FileUpload = observer(() => {
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [uploadProgress, setUploadProgress] = useState(0);
 
     const handleFileVideo = (e) => {
         videoStore.setFile(e.target.files[0]);
@@ -78,30 +76,51 @@ const FileUpload = observer(() => {
         <Card className="text-light bg-dark" style={{width: 500, marginLeft: 'auto', marginRight: 'auto', marginTop: 200}}>
             <Card.Header style={{marginLeft: 'auto', marginRight: 'auto'}}>Enviar vídeo</Card.Header>
             <Card.Body>
-                <Form.Group  onChange={handleFileVideo} controlId="formFile" className="mb-3 bg-dark" style={{width: 465}}>
-                <Form.Label>Vídeo</Form.Label>
-                    <Form.Control type="file" />
-                </Form.Group>
-                <Form.Group  onChange={handleFileThumbnail} controlId="formFile" className="mb-3 bg-dark" style={{width: 465}}>
-                    <Form.Label>Thumbnail</Form.Label>
-                    <Form.Control type="file" />
-                </Form.Group>
-                {videoStore.thumbURL && (
+                {videoStore?.editing ? (
                     <>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                            <Form.Label>Título</Form.Label>
+                            <Form.Control value={videoStore.videoEdit.titulo} onChange={(e) => videoStore.setTituloEdit(e.target.value)} as="textarea" rows={1} />
+                        </Form.Group>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Descrição</Form.Label>
+                        <Form.Control value={videoStore.videoEdit.descricao} onChange={(e) => videoStore.setDescricaoEdit(e.target.value)} as="textarea" rows={3} />
+                    </Form.Group>
+
+
+                    <Button variant="primary" onClick={videoStore.handleEdit}>Editar</Button>
+                    </>
+                ) : (
+                    <>
+                    <Form.Group  onChange={handleFileVideo} controlId="formFile" className="mb-3 bg-dark" style={{width: 465}}>
+                <Form.Label>Vídeo</Form.Label>
+                <Form.Control type="file" />
+            </Form.Group>
+            <Form.Group  onChange={handleFileThumbnail} controlId="formFile" className="mb-3 bg-dark" style={{width: 465}}>
+                <Form.Label>Thumbnail</Form.Label>
+                <Form.Control type="file" />
+            </Form.Group>
+            {videoStore.thumbURL && (
+                <>
                     <Form.Label>Prévia</Form.Label>
                     <img className={'img-thumbnail'} src={videoStore.thumbURL} alt={'thumbnail'} />
+                </>
+            )}
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Título</Form.Label>
+                <Form.Control value={videoStore.videoData.titulo} onChange={(e) => videoStore.setTitulo(e.target.value)} as="textarea" rows={1} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Descrição</Form.Label>
+                <Form.Control value={videoStore.videoData.descricao} onChange={(e) => videoStore.setDescricao(e.target.value)} as="textarea" rows={3} />
+            </Form.Group>
+
+            <Button variant="primary" onClick={videoStore.handleUpload}>Enviar</Button>
+            {videoStore.uploadProgress > 0 && <p>Progresso: {videoStore.uploadProgress}%</p>}
+
                     </>
-                )}
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Título</Form.Label>
-                    <Form.Control value={videoStore.videoData.titulo} onChange={(e) => videoStore.setTitulo(e.target.value)} as="textarea" rows={1} />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Descrição</Form.Label>
-                    <Form.Control value={videoStore.videoData.descricao} onChange={(e) => videoStore.setDescricao(e.target.value)} as="textarea" rows={3} />
-                </Form.Group>
-                <Button variant="primary" onClick={videoStore.handleUpload}>Enviar</Button>
-                {videoStore.uploadProgress > 0 && <p>Progresso: {videoStore.uploadProgress}%</p>}
+                    )}
+
             </Card.Body>
         </Card>
     );
