@@ -15,7 +15,6 @@ class VideoStore {
         constructor() {
             makeAutoObservable(this);
             this.idUser = localStorage.getItem('idUser');
-            this.getVideos()
         }
 
         getVideos() {
@@ -97,17 +96,6 @@ class VideoStore {
 
         setVideos(videos){
             this.videos = videos
-        }
-
-
-        getVideos(){
-            console.log('token', AuthStore.getToken)
-            api.get('/videos',{headers:{
-                'Authorization':'Bearer ' + AuthStore.getToken
-            }}).then((response) => {
-                this.setVideos(response.data)
-                console.log(response.data)
-            }).catch((e) => console.log(e))
         }
 }
 

@@ -31,8 +31,8 @@ public class TadStubeApiApplication {
     public void initAlmocos() {
 
         List<Usuario> users = Stream.of(
-                new Usuario(1L, "erick", encoder().encode("1234567"), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
-                new Usuario(2L, "emerson", encoder().encode("1234567"), new ArrayList<>(), new ArrayList<>(), new ArrayList<>())
+                new Usuario(1L, "erick", encoder().encode("1234567")),
+                new Usuario(2L, "emerson", encoder().encode("1234567"))
 
         ).collect(Collectors.toList());
 

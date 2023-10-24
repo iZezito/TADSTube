@@ -1,6 +1,7 @@
 package com.example.tadstubeapi.model;
 
 import com.example.tadstubeapi.usuario.Usuario;
+import com.example.tadstubeapi.usuario.UsuarioDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +30,7 @@ public class Video {
     @Column(name = "DataUpload")
     private Timestamp dataUpload;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "IDCanal")
     private Usuario usuario;
 

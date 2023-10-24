@@ -7,11 +7,13 @@ import { BsPersonCircle } from 'react-icons/bs';
 import Painel from '../components/painelcanal';
 import VideoCard from '../components/VideoCard';
 import store from '../store/VideoStore';
+import { observer } from 'mobx-react';
 
-const VideoPlayer = () => {
+const VideoPlayer = observer(() => {
     const videoRef = useRef(null);
 
-    useEffect(() => {
+    useEffect(  () => {
+        store.getVideos();
         // const filename = 'Alugamos_um_CARRO_de_TR_S_RODAS___.mp4'; // Substitua pelo nome do vídeo que você deseja reproduzir
 
         // fetch(`http://localhost:8080/stream/${filename}`)
@@ -33,20 +35,26 @@ const VideoPlayer = () => {
     return (
         <>
         <Container className={'overflow-auto text-center mt-5'}>
-            <h1 className='text-light'>
-                Ainda não á vídeo cadastrado!
-            </h1>
-            <h4 className='text-light'>Vídeos</h4>
-            <hr className="my-2" style={{ borderColor: 'white' }} />
-            <Row xs={1} md={3} className="g-3">
-            {store.videos.map((item) => (
-                <VideoCard key={item.id} {...item} />
-            ))}
+
+            {store.videos.length === 0 ? (
+                <h1 className='text-light'>
+                    Ainda não há vídeos cadastrados!
+                </h1>
+            ) : (
+                <>
+                <h4 className='text-light'>Vídeos</h4>
+                <hr className="my-2" style={{ borderColor: 'white' }} />
+                <Row xs={1} md={3} className="g-3">
+                {store.videos.map((item) => (
+                    <VideoCard key={item.id} {...item} />
+                ))}
             </Row>
+                </>
+            )}
         </Container>
         </>
     );
-};
+});
 
 export default VideoPlayer;
 

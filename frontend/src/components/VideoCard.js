@@ -1,14 +1,15 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Card from 'react-bootstrap/Card';
 import { BsPersonCircle } from 'react-icons/bs';
 import Col from 'react-bootstrap/Col';
+import api from "../service/Configuration";
 
 const VideoCard = ({titulo, descricao, thumbnail}) =>{
 
     return (
         <Col>
                     <Card bg='dark' style={{color: 'white'}}>
-                        <img src={thumbnail} alt={'thumbnail'}/>
+                        <img src={`http://localhost:8080/resources/image/${thumbnail}`} alt={'thumbnail'}/>
                         <Card.Body>
                         <div class="row">
                             <div class="col-auto">

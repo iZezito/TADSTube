@@ -23,7 +23,7 @@ public class VideoService extends GenericService<Video> {
         // Salve o arquivo no diretório temporário
         File dest = new File(uploadDir.getAbsolutePath() + File.separator + filename);
         file.transferTo(dest);
-        return dest.getAbsolutePath();
+        return filename;
     }
 
     public File getVideo(String url) throws IOException {
@@ -43,6 +43,6 @@ public class VideoService extends GenericService<Video> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return dest.getAbsolutePath();
+        return filename;
     }
 }
