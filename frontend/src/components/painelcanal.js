@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/esm/Container';
-import { BsPersonCircle, BsBell, BsBellFill } from 'react-icons/bs';
+import { BsPersonCircle, BsBell, BsBellFill, BsPencil, BsXLg } from 'react-icons/bs';
 import {Link} from "react-router-dom";
 
 export default function Painel() {
@@ -50,12 +50,21 @@ export default function Painel() {
                             <img src={'https://criarestilosnet.com/wp-content/uploads/2020/04/youtube-video-thumbnail-1200x675.jpg'} alt={'thumbnail'}/>
                             <Card.Body>
                             <div class="row">
-                                <div class="col">
+                                <div className="col-12">
                                     <Card.Title>Comer muito? ou comer pouco?</Card.Title>
+                                </div>
+                                <div className='col-10'>
                                     <Card.Text>
                                         119 mil visualizações há 2 dias
                                     </Card.Text>
                                 </div>
+                                <div className='col-1'>
+                                    <Link to={'/upload'} className='text-light text-decoration-none'><BsPencil/></Link>
+                                </div>
+                                <div className='col-1'>
+                                    <Link to={'/upload'} className='text-light text-decoration-none'><BsXLg/></Link>
+                                </div>
+
                             </div>
                             </Card.Body>
                         </Card>
