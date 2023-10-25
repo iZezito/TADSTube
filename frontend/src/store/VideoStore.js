@@ -161,7 +161,7 @@ class VideoStore {
                 this.videoView = response.data;
                 return this.downloadVideo()
             } catch (error) {
-                if (error.response && error.response.status === 403) {
+                if (error.status === 403) {
                     AuthStore.logout();
                 }
             }
@@ -252,6 +252,25 @@ class VideoStore {
     setResposta(value) {
         this.resposta.texto = value;
 
+    }
+
+    enviarRespostaComentario(comentarioId) {
+        this.resposta.usuario.id = Number(this.idUser);
+        api.post(`respostas/${comentarioId}`, this.resposta, {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            console.log(response.data);
+            this.comentarios[this.comentarios.findIndex((comentario) => comentario.idComentario === comentarioId)].respostas.push(response.data);
+            this.respostaComentario.texto = '';
+        }).catch((erro) => {
+            console.log('Consolezada:', erro);
+            if (erro.status === 401) {
+                AuthStore.logout();
+            }
+            console.log(erro);
+        })
     }
 }
 

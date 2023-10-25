@@ -58,6 +58,15 @@ const ViewVideo = observer(() => {
         store.deleteRespostaComentario()
     }
 
+    const handleShowModalNoticia = () => setShowModalNoticia(true);
+    const handleCloseModalNoticia = () => setShowModalNoticia(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = (id) => {
+        setIndexNoticia(id)
+        setShow(true);
+    }
+
 
 
 
@@ -133,7 +142,7 @@ const ViewVideo = observer(() => {
                                                     <MdSend
 
                                                         style={{borderRadius: 20}} size={25}
-                                                        color={store.comentarioEdit.texto ? 'black' : 'gray'} className={'ms-1 mb-1'}/>
+                                                        color={store.comentarioEdit.texto ? 'white' : 'gray'} className={'ms-1 mb-1'}/>
                                                 </button>
                                             </>
 
@@ -141,11 +150,11 @@ const ViewVideo = observer(() => {
                                         ) : (
                                             <>
                                                 <p className={'text-start text-light ps-1 coment'}>{comentario.texto}</p>
-                                                {comentario.usuario.id === store.idUser && (
+                                                {comentario.usuario.id === Number(store.idUser) && (
                                                     <div className={'d-flex flex-column'}>
                                                         <button className={'align-self-end ms-auto btn-delete'} type="button"
                                                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                                            <BsThreeDotsVertical/>
+                                                            <BsThreeDotsVertical color={'white'}/>
                                                             <ul className="dropdown-menu">
                                                                 <li className="dropdown-item" onClick={() => {
                                                                     setEditingCommentId(comentario.idComentario);
@@ -173,7 +182,7 @@ const ViewVideo = observer(() => {
                                                     onClick={() => setReplyingToCommentId(comentario.idComentario)}>responder
                                             </button>
                                             {comentario?.respostas?.length > 0 && (
-                                                <button className={'nav-link btn-responder ms-1 resp'}
+                                                <button className={'nav-link text-light btn-responder ms-1 resp'}
                                                         onClick={() => handleVerRespostas(comentario.idComentario)}>
                                                     {expandedComments.includes(comentario.idComentario) ? 'ocultar respostas' : 'ver respostas'}
                                                 </button>)}
@@ -210,18 +219,18 @@ const ViewVideo = observer(() => {
                                                                 disabled={!store.respostaEdit.texto}>
                                                                 <MdSend
                                                                     style={{borderRadius: 20}} size={25}
-                                                                    color={store.respostaEdit.texto ? 'black' : 'gray'} className={'ms-1 mb-1'}/>
+                                                                    color={store.respostaEdit.texto ? 'white' : 'gray'} className={'ms-1 mb-1'}/>
                                                             </button>
                                                         </>
                                                     ) : (
                                                         <>
-                                                            <p className={'text-start'}>{resposta.texto}</p>
-                                                            {resposta.usuario.id === store.idUser && (
+                                                            <p className={'text-start text-light'}>{resposta.texto}</p>
+                                                            {resposta.usuario.id === Number(store.idUser) && (
                                                                 <div className={'d-flex flex-column'}>
                                                                     <button className={'align-self-end ms-auto btn-delete'}
                                                                             type="button" data-bs-toggle="dropdown"
                                                                             aria-expanded="false">
-                                                                        <BsThreeDotsVertical/>
+                                                                        <BsThreeDotsVertical color={'white'}/>
                                                                         <ul className="dropdown-menu">
                                                                             <li className="dropdown-item"
                                                                                 onClick={() => {
@@ -264,7 +273,7 @@ const ViewVideo = observer(() => {
                                             onClick={() => store.enviarRespostaComentario(comentario.idComentario)}>
                                             <MdSend
                                                 style={{borderRadius: 20}} size={25}
-                                                color={store.resposta.texto ? 'black' : 'gray'}
+                                                color={store.resposta.texto ? 'white' : 'gray'}
                                                 className={'ms-1 mb-1'}/>
 
                                         </button>
@@ -284,7 +293,7 @@ const ViewVideo = observer(() => {
                         <MdSend
 
                             style={{borderRadius: 20}} size={25}
-                            color={store.comentario.texto ? 'black' : 'gray'} className={'ms-1 mb-1'}/>
+                            color={store.comentario.texto ? 'white' : 'gray'} className={'ms-1 mb-1'}/>
                     </button>
                 </div>
                 <div class="col-4">
