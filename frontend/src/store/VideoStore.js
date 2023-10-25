@@ -231,11 +231,27 @@ class VideoStore {
                 }
             }).then((response) => {
                 this.comentarios = response.data;
+                console.log(this.comentarios);
             }).catch((erro) => {
                 if (erro.status === 403) {
                     AuthStore.logout();
                 }
             })
+    }
+
+    setComentarioEdit(value) {
+        this.comentarioEdit.texto = value;
+
+    }
+
+    setRespostaEdit(value) {
+        this.respostaEdit.texto = value;
+        
+    }
+
+    setResposta(value) {
+        this.resposta.texto = value;
+
     }
 }
 

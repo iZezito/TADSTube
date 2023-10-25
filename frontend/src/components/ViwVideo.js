@@ -19,6 +19,18 @@ import {MdSend} from "react-icons/md";
 import {Modal} from "react-bootstrap";
 
 const ViewVideo = observer(() => {
+
+    const { id } = useParams();
+
+    const videoRef = useRef(null);
+
+    useEffect( () => {
+        const init = async () => {
+            videoRef.current.src = await store.loadVideo(id);
+        }
+        init();
+        store.loadComentarios(id);
+    }, []);
     const [show, setShow] = useState(false);
     const [indexNoticia, setIndexNoticia] = useState(0)
     const [replyingToCommentId, setReplyingToCommentId] = useState(null);
@@ -46,17 +58,7 @@ const ViewVideo = observer(() => {
         store.deleteRespostaComentario()
     }
 
-    const { id } = useParams();
 
-    const videoRef = useRef(null);
-
-    useEffect( () => {
-        const init = async () => {
-            videoRef.current.src = await store.loadVideo(id);
-        }
-        init();
-        store.loadComentarios(id);
-    }, []);
 
 
     return (
@@ -101,9 +103,12 @@ const ViewVideo = observer(() => {
                     </Card>
                     <h4 className="text-light">Comentários</h4>
                     {store.comentarios?.map((comentario) => {
-                        const isReplyingToComment = editingCommentId === comentario.id;
+                        const isReplyingToComment = editingCommentId === comentario.idComentario;
+                        console.log('isReplyingToComment', isReplyingToComment)
+                        console.log('comentario', comentario.idComentario)
+                        console.log('editingCommentId', editingCommentId)
                         return (
-                            <div className={'container'} key={comentario.id}>
+                            <div className={'container'} key={comentario.idComentario}>
                                 <div className={'comentario-texto mt-2'}>
                                     <div className={'d-flex flex-row justify-content-between'}>
                                         {isReplyingToComment ? (
@@ -122,7 +127,7 @@ const ViewVideo = observer(() => {
                                                 </button>
                                                 <button
                                                     className={'btn-icon'}
-                                                    onClick={() => store.updateComentario(comentario.id)}
+                                                    onClick={() => store.updateComentario(comentario.idComentario)}
                                                     disabled={!store.comentarioEdit.texto}>
 
                                                     <MdSend
@@ -136,21 +141,21 @@ const ViewVideo = observer(() => {
                                         ) : (
                                             <>
                                                 <p className={'text-start text-light ps-1 coment'}>{comentario.texto}</p>
-                                                {comentario.autor === store.user && (
+                                                {comentario.usuario.id === store.idUser && (
                                                     <div className={'d-flex flex-column'}>
                                                         <button className={'align-self-end ms-auto btn-delete'} type="button"
                                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                             <BsThreeDotsVertical/>
                                                             <ul className="dropdown-menu">
                                                                 <li className="dropdown-item" onClick={() => {
-                                                                    setEditingCommentId(comentario.id);
+                                                                    setEditingCommentId(comentario.idComentario);
                                                                     setEditedComment(comentario.texto);
                                                                     store.setComentarioEdit(comentario.texto)
                                                                 }}>Editar</li>
                                                                 <li className="dropdown-item" onClick={() => {
                                                                     setSmShow(true)
                                                                     setShow(false)
-                                                                    store.setComentarioDeleteId(comentario.id)
+                                                                    store.setComentarioDeleteId(comentario.idComentario)
                                                                     store.setRespostaDeleteId(null)
                                                                 }}>Excluir</li>
                                                             </ul>
@@ -164,24 +169,24 @@ const ViewVideo = observer(() => {
                                     </div>
                                     { !isReplyingToComment && (
                                         <div className={'d-flex flex-row justify-content-end'}>
-                                            <button className={'nav-link btn-responder ms-1 resp'}
-                                                    onClick={() => setReplyingToCommentId(comentario.id)}>responder
+                                            <button className={'nav-link text-light btn-responder ms-1 resp'}
+                                                    onClick={() => setReplyingToCommentId(comentario.idComentario)}>responder
                                             </button>
                                             {comentario?.respostas?.length > 0 && (
                                                 <button className={'nav-link btn-responder ms-1 resp'}
-                                                        onClick={() => handleVerRespostas(comentario.id)}>
-                                                    {expandedComments.includes(comentario.id) ? 'ocultar respostas' : 'ver respostas'}
+                                                        onClick={() => handleVerRespostas(comentario.idComentario)}>
+                                                    {expandedComments.includes(comentario.idComentario) ? 'ocultar respostas' : 'ver respostas'}
                                                 </button>)}
                                         </div>
                                     )}
                                 </div>
 
-                                {comentario?.respostas?.length > 0 && expandedComments.includes(comentario.id) &&
+                                {comentario?.respostas?.length > 0 && expandedComments.includes(comentario.idComentario) &&
                                     comentario?.respostas.map((resposta) => {
-                                        const isReplyingToResponse = editingReplyId === resposta.id;
+                                        const isReplyingToResponse = editingReplyId === resposta.idResposta;
 
                                         return (
-                                            <div className={'resposta-texto ms-5 mt-2 ps-1'} key={resposta.id}>
+                                            <div className={'resposta-texto ms-5 mt-2 ps-1'} key={resposta.idResposta}>
                                                 <div
                                                     className={'d-flex flex-row justify-content-between'}>
                                                     {isReplyingToResponse ? (
@@ -201,7 +206,7 @@ const ViewVideo = observer(() => {
 
                                                             <button
                                                                 className={'btn-icon'}
-                                                                onClick={() => store.updateResposta(resposta.id)}
+                                                                onClick={() => store.updateResposta(resposta.idResposta)}
                                                                 disabled={!store.respostaEdit.texto}>
                                                                 <MdSend
                                                                     style={{borderRadius: 20}} size={25}
@@ -211,7 +216,7 @@ const ViewVideo = observer(() => {
                                                     ) : (
                                                         <>
                                                             <p className={'text-start'}>{resposta.texto}</p>
-                                                            {resposta.autor === store.user && (
+                                                            {resposta.usuario.id === store.idUser && (
                                                                 <div className={'d-flex flex-column'}>
                                                                     <button className={'align-self-end ms-auto btn-delete'}
                                                                             type="button" data-bs-toggle="dropdown"
@@ -220,7 +225,7 @@ const ViewVideo = observer(() => {
                                                                         <ul className="dropdown-menu">
                                                                             <li className="dropdown-item"
                                                                                 onClick={() => {
-                                                                                    setEditingReplyId(resposta.id);
+                                                                                    setEditingReplyId(resposta.idResposta);
                                                                                     setEditedReply(resposta.texto);
                                                                                     store.setRespostaEdit(resposta.texto)
                                                                                 }}
@@ -229,8 +234,8 @@ const ViewVideo = observer(() => {
                                                                                 onClick={() => {
                                                                                     setSmShow(true)
                                                                                     setShow(false)
-                                                                                    store.setRespostaDeleteId(resposta.id)
-                                                                                    store.setComentarioDeleteId(comentario.id)
+                                                                                    store.setRespostaDeleteId(resposta.idResposta)
+                                                                                    store.setComentarioDeleteId(comentario.idResposta)
                                                                                 }}
                                                                             >Excluir</li>
                                                                         </ul>
@@ -244,22 +249,22 @@ const ViewVideo = observer(() => {
                                             </div>
                                         );
                                     })}
-                                {replyingToCommentId === comentario.id && (
+                                {replyingToCommentId === comentario.idComentario && (
                                     <div className={'text-start ms-5 mb-2 ps-1'}>
                                         <input
                                             type={'text'}
                                             className={'form-text'}
                                             placeholder={'Digite sua resposta...'}
-                                            value={store.respostaComentario.texto}
-                                            onChange={(e) => store.setRespostaComentario(e.target.value)}
+                                            value={store.resposta.texto}
+                                            onChange={(e) => store.setResposta(e.target.value)}
                                         />
                                         <button
                                             className={'btn-icon'}
-                                            disabled={!store.respostaComentario.texto}
-                                            onClick={() => store.enviarRespostaComentario(comentario.id)}>
+                                            disabled={!store.resposta.texto}
+                                            onClick={() => store.enviarRespostaComentario(comentario.idComentario)}>
                                             <MdSend
                                                 style={{borderRadius: 20}} size={25}
-                                                color={store.respostaComentario.texto ? 'black' : 'gray'}
+                                                color={store.resposta.texto ? 'black' : 'gray'}
                                                 className={'ms-1 mb-1'}/>
 
                                         </button>
