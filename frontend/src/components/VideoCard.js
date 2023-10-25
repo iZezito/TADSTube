@@ -3,11 +3,13 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import api from "../service/Configuration";
 import {BsPersonCircle, BsBell, BsBellFill, BsPencil, BsXLg } from 'react-icons/bs';
-
-const VideoCard = ({titulo, descricao, thumbnail, usuario}) => {
+import store from "../store/VideoStore";
+import {Link} from "react-router-dom";
+const VideoCard = ({idVideo, titulo, descricao, thumbnail, usuario}) => {
 
     return (
         <Col>
+                    <Link to={`/view/${idVideo}`} className='text-decoration-none'>
                     <Card bg='dark' style={{color: 'white'}}>
                         <img src={`http://localhost:8080/resources/image/${thumbnail}`} alt={'thumbnail'}/>
                         <Card.Body>
@@ -27,6 +29,7 @@ const VideoCard = ({titulo, descricao, thumbnail, usuario}) => {
                         </div>
                         </Card.Body>
                     </Card>
+                    </Link>
                 </Col>
     )
 }

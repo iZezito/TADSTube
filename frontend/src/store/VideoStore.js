@@ -15,6 +15,8 @@ class VideoStore {
         uploadProgress = 0
         thumbURL = undefined
         videoEdit = { id: undefined, titulo: '', descricao: '', usuario: { id: undefined }, dataUpload: new Date()}
+        videoView = { id: undefined, titulo: '', descricao: '', usuario: { id: undefined }, dataUpload: new Date(), url:''}
+        videoViewFile = undefined
         constructor() {
             makeAutoObservable(this);
             this.idUser = localStorage.getItem('idUser');
@@ -137,11 +139,64 @@ class VideoStore {
             }).then((response) => {
                 this.editing = false;
             }).catch((erro) => {
-                if (erro.response.status === 403) {
+                if (erro.status === 403) {
                     AuthStore.logout();
                 }
             })
         }
+
+        async loadVideo(id) {
+            try {
+                const response = await api.get('/videos/' + id, {
+                    headers: {
+                        'Authorization': 'Bearer ' + AuthStore.getToken
+                    }
+                });
+
+                this.videoView = response.data;
+                return this.downloadVideo()
+            } catch (error) {
+                if (error.response && error.response.status === 403) {
+                    AuthStore.logout();
+                }
+            }
+        }
+
+
+    // async loadVideoFile() {
+    //     try {
+    //         const response = await api.get(`/resources/videos/${this.videoView.filename}`, {
+    //             headers: {
+    //                 'Authorization': 'Bearer ' + AuthStore.getToken
+    //             }
+    //         });
+    //
+    //         this.videoViewFile = response.data;
+    //     } catch (error) {
+    //         if (error.response && error.response.status === 403) {
+    //             AuthStore.logout();
+    //         }
+    //     }
+    // }
+
+    async downloadVideo() {
+            try {
+                const response = await api.get(`/resources/video/${this.videoView.url}`, {
+                    responseType: 'arraybuffer',
+                    headers: {
+                        'Authorization': 'Bearer ' + AuthStore.getToken
+                    }
+                });
+
+                const blob = new Blob([response.data], { type: response.headers['content-type'] });
+                const videoUrl = URL.createObjectURL(blob);
+
+                // Define o URL do vídeo na tag <video>
+                return videoUrl;
+        } catch (error) {
+            console.error('Erro ao carregar o vídeo:', error);
+        }
+    }
 
 
 }

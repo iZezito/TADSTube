@@ -28,7 +28,7 @@ const App = observer(() => {
                         {isAuthenticated && <Route exact path={'/upload'} element={<FileUpload />} />}
                         {isAuthenticated && <Route exact path="/canal" element={<Painel />} />}
                         {isAuthenticated && <Route path="*" element={<NotFoundPage />} />}
-                        {isAuthenticated && <Route path="/view" element={<ViewVideo />} />}
+                        {isAuthenticated && <Route path="/view/:id" element={<ViewVideo />} />}
                     </Routes>
                 </div>
 

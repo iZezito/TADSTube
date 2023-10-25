@@ -1,5 +1,7 @@
 package com.example.tadstubeapi.controllers;
 
+import com.example.tadstubeapi.model.Video;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import org.springframework.core.io.Resource;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -34,11 +37,11 @@ public class ResourcesController {
             // pegar a extensão do arquivo
             String[] split = filename.split("\\.");
             String extension = split[split.length - 1];
-            if(extension.equals("png"))
+            if (extension.equals("png"))
                 headers.setContentType(MediaType.IMAGE_PNG);
-            else if(extension.equals("jpg") || extension.equals("jpeg"))
+            else if (extension.equals("jpg") || extension.equals("jpeg"))
                 headers.setContentType(MediaType.IMAGE_JPEG);
-            else if(extension.equals("gif"))
+            else if (extension.equals("gif"))
                 headers.setContentType(MediaType.IMAGE_GIF);
             else
                 headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -47,6 +50,19 @@ public class ResourcesController {
         } catch (IOException e) {
             // Em caso de erro ao ler o arquivo, retorne uma resposta de erro
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/video/{filename:.+}")
+    public ResponseEntity<Resource> downloadVideo(@PathVariable String filename) {
+        File file = new File("upload-dir/" + filename);
+        if (file.exists()) {
+            Resource resource = new FileSystemResource(file);
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .body(resource);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 

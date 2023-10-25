@@ -1,21 +1,36 @@
-import React, { useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Container from 'react-bootstrap/esm/Container';
-import { Link } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { BsPersonCircle, BsBell, BsBellFill, BsHandThumbsUp, BsHandThumbsUpFill, BsHandThumbsDown, BsHandThumbsDownFill } from 'react-icons/bs';
+import { observer } from 'mobx-react';
+import store from '../store/VideoStore';
 
-export default function ViewVideo() {
+const ViewVideo = observer(() => {
     const [inscrito, setInscrito] = useState(false)
+
+    const { id } = useParams();
+
+    const videoRef = useRef(null);
+
+    useEffect( () => {
+        const init = async () => {
+            videoRef.current.src = await store.loadVideo(id);
+        }
+        init();
+    }, []);
+
+
     return (
         <>
         <Container>
             <div class="row">
                 <div class="col-8">
                     <Card className="mb-5" bg='dark' style={{color: 'white'}}>
-                        <video/>
+                        <video ref={videoRef} controls={true}/>
                         <Card.Header>
-                            <Card.Title>Venha aprender!</Card.Title>
+                            <Card.Title>{store.videoView?.titulo}</Card.Title>
                         </Card.Header>
                         <Card.Body>
                         <div class="row">
@@ -23,7 +38,7 @@ export default function ViewVideo() {
                                 <Card.Title><BsPersonCircle style={{width: 20, height: 20}}/></Card.Title>
                             </div>
                             <div class="col">
-                                <Card.Title>Canal X {inscrito ? (
+                                <Card.Title>{store.videoView?.usuario?.login} {inscrito ? (
                                         <Button variant="outline-light" onClick={() => setInscrito(false)} className="justify-content-center" style={{borderRadius: 100}}><BsBellFill/> Inscrito</Button>
                                     ) : (
                                         <Button variant="outline-light" onClick={() => setInscrito(true)} className="justify-content-center" style={{borderRadius: 100}}><BsBell/> Inscrever-se</Button>
@@ -43,12 +58,7 @@ export default function ViewVideo() {
                             38.480 visualizações  16 de out. de 2023
                             </Card.Text>
                             <Card.Text>
-                            O Hamas é um grupo que luta pelo território da Palestina, sobretudo, 
-                            pelos direitos, práticas e preceitos muçulmanos. Contudo, em comparação ao Estado de Israel, 
-                            é uma organização muito menor, menos estruturada e com bem menos recursos. 
-                            Como eles conseguem se manter? Como fizeram o ataque que deflagrou o atual conflito? 
-                            Será que eles podem vencer seu inimigo? Além de tudo, qual seria seu papel em um possível conflito mundial? 
-                            Veja tudo isso em mais esse vídeo da Fatos Desconhecidos.
+                                {store.videoView?.descricao}
                             </Card.Text>
                         </Card.Header>
                     </Card>
@@ -92,4 +102,6 @@ export default function ViewVideo() {
         </Container>
         </>
     )
-}
+});
+
+export default ViewVideo;
