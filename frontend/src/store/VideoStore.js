@@ -14,9 +14,14 @@ class VideoStore {
         thumbnail = undefined
         uploadProgress = 0
         thumbURL = undefined
-        videoEdit = { id: undefined, titulo: '', descricao: '', usuario: { id: undefined }, dataUpload: new Date()}
-        videoView = { id: undefined, titulo: '', descricao: '', usuario: { id: undefined }, dataUpload: new Date(), url:''}
-        videoViewFile = undefined
+        videoEdit = { idVideo: undefined, titulo: '', descricao: '', usuario: { id: undefined }, dataUpload: new Date()}
+        videoView = { idVideo: undefined, titulo: '', descricao: '', usuario: { id: undefined }, dataUpload: new Date(), url:''}
+        comentarios = []
+        comentario = {texto: '', usuario: { id: undefined }, video: { id: undefined }, dataComentario: new Date()}
+        resposta = {texto: '', usuario: { id: undefined }, dataResposta: new Date()}
+        comentarioEdit = { idComentario: undefined, texto: '', usuario: { id: undefined }, video: { id: undefined }}
+        respostaEdit = { idResposta: undefined, texto: '', usuario: { id: undefined }}
+
         constructor() {
             makeAutoObservable(this);
             this.idUser = localStorage.getItem('idUser');
@@ -199,6 +204,39 @@ class VideoStore {
     }
 
 
+    setComentario(comentario) {
+        this.comentario.texto = comentario;
+    }
+
+    enviarComentario() {
+        this.comentario.usuario.id = Number(this.idUser);
+        this.comentario.video.idVideo = Number(this.videoView.idVideo);
+        api.post('/comentarios', this.comentario, {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            //adicione como o primeiro elemento do array
+            this.comentarios.unshift(response.data);
+        }).catch((erro) => {
+            if (erro.status === 403) {
+                AuthStore.logout();
+            }
+        })
+    }
+    loadComentarios(id) {
+            api.get('/comentarios/video/' + id, {
+                headers: {
+                    'Authorization': 'Bearer ' + AuthStore.getToken
+                }
+            }).then((response) => {
+                this.comentarios = response.data;
+            }).catch((erro) => {
+                if (erro.status === 403) {
+                    AuthStore.logout();
+                }
+            })
+    }
 }
 
 const videoStore = new VideoStore();

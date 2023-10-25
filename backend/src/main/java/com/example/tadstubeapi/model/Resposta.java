@@ -29,10 +29,7 @@ public class Resposta {
     @ManyToOne
     @JoinColumn(name = "IDUsuario")
     private Usuario usuario;
-
-    @ManyToOne
-    @JoinColumn(name = "IDComentario")
-    private Comentario comentario;  // Referência ao comentário ao qual esta resposta pertence
+    // Referência ao comentário ao qual esta resposta pertence
 
     // Getters, setters e construtores
 }
