@@ -34,7 +34,7 @@ const VideoPlayer = observer(() => {
 
     return (
         <>
-        <Container className={'overflow-auto text-center mt-5'}>
+        <Container className={'overflow-auto mt-5'}>
 
             {store.videos.length === 0 ? (
                 <h1 className='text-light'>
@@ -42,13 +42,11 @@ const VideoPlayer = observer(() => {
                 </h1>
             ) : (
                 <>
-                <h4 className='text-light'>Vídeos</h4>
-                <hr className="my-2" style={{ borderColor: 'white' }} />
                 <Row xs={1} md={3} className="g-3">
                 {store.videos.map((item) => (
                     <VideoCard key={item.id} {...item} />
                 ))}
-            </Row>
+                </Row>
                 </>
             )}
         </Container>

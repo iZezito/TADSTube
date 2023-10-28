@@ -15,15 +15,12 @@ const VideoCard = ({idVideo, titulo, descricao, thumbnail, usuario}) => {
                         <Card.Body>
                         <div class="row">
                             <div class="col-auto">
-                                <Card.Title><BsPersonCircle style={{width: 35, height: 35}}/></Card.Title>
+                                <Card.Title><BsPersonCircle style={{width: 50, height: 50}}/></Card.Title>
                             </div>
                             <div class="col">
                                 <Card.Title>{titulo}</Card.Title>
                                 <Card.Text>
                                     {usuario?.login}
-                                    <Card.Text>
-                                    119 mil visualizações há 2 dias
-                                    </Card.Text>
                                 </Card.Text>
                             </div>
                         </div>
