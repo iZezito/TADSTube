@@ -19,6 +19,7 @@ import store from "../store/VideoStore";
 import { MdSend } from "react-icons/md";
 import { Col, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import VideoShareButton from '../components/ButtonShare'
 
 const ViewVideo = observer(() => {
   const { id } = useParams();
@@ -97,7 +98,7 @@ const ViewVideo = observer(() => {
                       </div>
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col-auto">
                     <Card.Title>
                       {" "}
                       {inscrito ? (
@@ -121,6 +122,9 @@ const ViewVideo = observer(() => {
                       )}
                     </Card.Title>
                   </div>
+                  <div className="col-auto"> 
+                  <VideoShareButton/>
+                  </div>
                 </div>
               </Card.Body>
               <Card.Footer>
@@ -132,6 +136,7 @@ const ViewVideo = observer(() => {
                 <h4 className="text-light">Comentários</h4>
               </Card.Header>
               <Card.Header>
+                {/* Form para digitar comentários */}
                 <Form className="bg-dark row">
                   <Col md="11">
                     <Form.Control
@@ -139,6 +144,7 @@ const ViewVideo = observer(() => {
                       placeholder="Digite seu comentário..."
                       value={store.comentario?.texto}
                       onChange={(e) => store.setComentario(e.target.value)}
+                      style={{ borderRadius: 100 }}
                     />
                   </Col>
                   <Col md="1">
@@ -171,6 +177,7 @@ const ViewVideo = observer(() => {
                       >
                         {isReplyingToComment ? (
                           <Form className="bg-dark row">
+                            {/*Editar comentários */}
                             <Col md="9">
                               <Form.Control
                                 className={"bg-dark text-light input-edit"}
@@ -311,6 +318,7 @@ const ViewVideo = observer(() => {
 
                           return (
                             <Card key={resposta.idResposta} className="mb-1" bg="dark" style={{ color: "white" }}>
+                              {/* Resposta dos comentários */}
                                 {isReplyingToResponse ? (
                                     <Form className="bg-dark row">
                                         <Col md="9">
@@ -320,6 +328,7 @@ const ViewVideo = observer(() => {
                                             onChange={(e) =>
                                                 store.setRespostaEdit(e.target.value)
                                             }
+                                            style={{borderRadius: 100}}
                                             />
                                         </Col>
                                         <Col md="2">
@@ -420,6 +429,7 @@ const ViewVideo = observer(() => {
                                 placeholder="Digite sua resposta..."
                                 value={store.resposta.texto}
                                 onChange={(e) => store.setResposta(e.target.value)}
+                                style={{borderRadius: 100}}
                                 />
                             </Col>
                             <Col md="1">

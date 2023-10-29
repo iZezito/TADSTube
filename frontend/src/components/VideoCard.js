@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from "react";
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
-import api from "../service/Configuration";
-import {BsPersonCircle, BsBell, BsBellFill, BsPencil, BsXLg } from 'react-icons/bs';
-import store from "../store/VideoStore";
+import {BsPersonCircle } from 'react-icons/bs';
 import {Link} from "react-router-dom";
-const VideoCard = ({idVideo, titulo, descricao, thumbnail, usuario}) => {
+const VideoCard = ({idVideo, titulo, thumbnail, usuario}) => {
 
     return (
         <Col>
