@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public abstract class GenericService<T>{
     @Autowired
-    private GenericRepository<T> repository;
+    protected GenericRepository<T> repository;
 
     public T save(T t){
         return repository.save(t);

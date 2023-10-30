@@ -5,6 +5,8 @@ import com.example.tadstubeapi.usuario.Usuario;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -33,6 +35,9 @@ public class Comentario {
     @ManyToOne
     @JoinColumn(name = "IDVideo")
     private Video video;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Resposta> respostas = new ArrayList<>();
 
     // Getters, setters e construtores
 }

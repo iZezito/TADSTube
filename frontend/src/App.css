@@ -128,4 +128,114 @@
     background-color: #F5F5F5; /* cor do canto da barra de rolagem */
 }
 
+.resp:hover{
+    border-color: black;
+    border-bottom-width: 1px;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.comentario-texto,
+.resposta-texto {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.coment{
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.input-edit:focus{
+    outline: none;
+    width:80%;
+}
+
+.resposta{
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.btn-responder{
+    margin-top: -20px;
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.icon-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(71, 115, 5);
+    font-size: 12px;
+    padding: 4px;
+    border-radius: 50%;
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    max-width: 300px;
+    z-index: 9999;
+}
+
+.toast-message {
+    flex-grow: 1;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+}
+
+/* input com background transparente e borda branca e o texto branco */
+input[type="text"] {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
 

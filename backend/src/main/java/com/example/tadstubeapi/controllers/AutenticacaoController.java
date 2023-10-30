@@ -32,7 +32,7 @@ public class AutenticacaoController {
             var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
             var usuario = tokenService.getSubject(tokenJWT);
 
-            return ResponseEntity.ok(new DadosTokenJWT(tokenJWT, usuario));
+            return ResponseEntity.ok(new DadosTokenJWT(tokenJWT, ((Usuario) authentication.getPrincipal()).getId()));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());

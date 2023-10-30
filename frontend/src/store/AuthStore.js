@@ -24,7 +24,7 @@ class AuthStore {
             localStorage.setItem('token', response.data.token);
             this.isAuthenticated = true;
             this.token = response.data.token;
-            localStorage.setItem('user', response.data.subject);
+            localStorage.setItem('idUser', response.data.idUser);
             store.user = response.data.subject;
             return this.isAuthenticated;
         } catch (error) {

@@ -34,15 +34,6 @@ public class Usuario implements UserDetails {
     @Size(min = 6)
     private String senha;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Inscricao> inscricoes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Video> videos = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Comentario> comentarios = new ArrayList<>();
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
