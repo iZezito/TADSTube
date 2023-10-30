@@ -6,6 +6,8 @@ import { BsPlayBtnFill } from 'react-icons/bs';
 import {observer} from "mobx-react";
 import {useNavigate} from "react-router-dom";
 import AuthStore from "../store/AuthStore";
+import { toastErro} from "../utils/Toaster";
+import { ToastContainer } from "react-toastify";
 
 const LoginPage = observer(() => {
   const navigate = useNavigate();
@@ -21,10 +23,13 @@ const LoginPage = observer(() => {
     if (loginSuccessful) {
       console.log('Login realizado com sucesso!');
       navigate('/');
+    } else {
+        toastErro('Usuário ou senha inválidos!');
     }
   }
 
   return (
+      <>
       <Card className='container position-absolute top-50 start-50 translate-middle bg-dark'>
         <Card.Header>
           <Card.Title className='text-light'><BsPlayBtnFill style={{width: 30, height: 30, color: 'red'}}/> TADStube</Card.Title>
@@ -48,7 +53,19 @@ const LoginPage = observer(() => {
           </Form>
 
         </Card.Body>
+
       </Card>
+        <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            draggable
+            theme="dark"
+        />
+      </>
   );
 });
 
