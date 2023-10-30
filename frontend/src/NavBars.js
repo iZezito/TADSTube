@@ -4,10 +4,26 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { BsPlayBtnFill, BsSearch, BsHouseDoor, BsCollectionPlay, BsBoxArrowInRight } from 'react-icons/bs';
-import './App.css'; 
+import {
+  BsPlayBtnFill,
+  BsSearch,
+  BsHouseDoor,
+  BsCollectionPlay,
+  BsBoxArrowInRight,
+  BsPersonSquare, BsPlayBtn
+} from 'react-icons/bs';
+import './App.css';
+import {Link} from "react-router-dom";
+import React from "react";
+import AuthStore from "./store/AuthStore";
+import { useNavigate } from "react-router-dom";
 
 function Menu() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    AuthStore.logout();
+    navigate('/login')
+  }
   return (
     <>
       {[false].map((expand) => (
@@ -50,9 +66,10 @@ function Menu() {
                   </div>
                 </Form>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="/"><BsHouseDoor style={{width: 20, height: 20}}/> Início</Nav.Link>
-                  <Nav.Link href="#action2"><BsCollectionPlay style={{width: 20, height: 20}}/> Inscrições</Nav.Link>
-                  <Nav.Link href="/cadastrar"><BsBoxArrowInRight style={{width: 20, height: 20}}/> Sair</Nav.Link>
+                  <Link to={'/'} className={'nav-link text-light'}><BsHouseDoor style={{ width: 20, height: 20 }} /> Início</Link>
+                  <Link to={'/canal'} className={'nav-link text-light'}><BsPersonSquare style={{ width: 20, height: 20 }} /> Seu canal</Link>
+                  <Link to={'/upload'} className={'nav-link text-light'}><BsPlayBtn style={{ width: 20, height: 20 }}/> Enviar vídeo</Link>
+                  <Link onClick={handleLogout} className={'nav-link text-light'}><BsBoxArrowInRight style={{ width: 20, height: 20 }} /> Sair</Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

@@ -3,8 +3,15 @@ import Nav from "react-bootstrap/Nav";
 import {Link} from "react-router-dom";
 import {BsBoxArrowInRight, BsPersonSquare, BsHouseDoor, BsPlayBtn} from "react-icons/bs";
 import Inscricao from "./inscricao";
+import AuthStore from "../store/AuthStore";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar(){
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        AuthStore.logout();
+        navigate('/login')
+    }
     return(
         <div className="side-grid">
             <Nav defaultActiveKey="/" className="flex-column">
@@ -29,7 +36,7 @@ export default function Sidebar(){
                     ))}
                 </div>
                 <hr className="my-2" style={{ borderColor: 'white' }} />
-                <Link to={'/sair'} className={'nav-link text-light'}><BsBoxArrowInRight style={{ width: 20, height: 20 }} /> Sair</Link>
+                <Link onClick={handleLogout} className={'nav-link text-light'}><BsBoxArrowInRight style={{ width: 20, height: 20 }} /> Sair</Link>
                 
             </Nav>
         </div>

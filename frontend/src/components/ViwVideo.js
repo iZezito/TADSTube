@@ -196,7 +196,7 @@ const ViewVideo = observer(() => {
                                   style={{ borderRadius: 20 }}
                                   size={25}
                                   color={
-                                    store.comentario.texto ? "white" : "gray"
+                                    store.comentarioEdit.texto ? "white" : "gray"
                                   }
                                 />
                               </Button>
@@ -204,18 +204,19 @@ const ViewVideo = observer(() => {
                             <Col md="1">
                               <Button
                                 className="btn-dark"
-                                onClick={(e) =>
+                                onClick={(e) => {
                                   store.updateComentario(
                                     comentario.idComentario
                                   )
-                                }
+                                  setEditingCommentId(null)
+                                }}
                                 disabled={!store.comentarioEdit.texto}
                               >
                                 <MdSend
                                   style={{ borderRadius: 20 }}
                                   size={25}
                                   color={
-                                    store.comentario.texto ? "white" : "gray"
+                                    store.comentarioEdit.texto ? "white" : "gray"
                                   }
                                 />
                               </Button>
@@ -349,11 +350,12 @@ const ViewVideo = observer(() => {
                                         <Col md="1">
                                             <Button
                                             className="btn-dark"
-                                            onClick={() =>
+                                            onClick={() => {
                                                 store.updateResposta(
                                                   resposta.idResposta
                                                 )
-                                              }
+                                                setEditingReplyId(null)
+                                              }}
                                               disabled={!store.respostaEdit.texto}>
                                             <MdSend
                                                 style={{ borderRadius: 20 }}
@@ -496,7 +498,11 @@ const ViewVideo = observer(() => {
             >
               Cancelar
             </Button>
-            <Button variant="danger" onClick={handleDeleteRespostaComentario}>
+            <Button variant="danger" onClick={() => {
+                store.respostaDeleteId ? store.deleteResposta() : store.handleDeleteComentario()
+                setSmShow(false);
+                setShow(true);
+            }}>
               Excluir
             </Button>
           </Modal.Footer>

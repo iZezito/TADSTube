@@ -65,7 +65,7 @@ const Painel = observer(() => {
                 <Col key={idx}>
                     <Link to={'/view'} className='text-decoration-none'>
                         <Card bg='dark' style={{color: 'white'}}>
-                            <img src={`http://localhost:8080/resources/image/${item?.thumbnail}`} alt={'thumbnail'}/>
+                            <img src={`http://10.77.115.210:8080/resources/image/${item?.thumbnail}`} alt={'thumbnail'}/>
                             <Card.Body>
                             <div class="row">
                                 <div className="col-12">
@@ -91,7 +91,6 @@ const Painel = observer(() => {
                         </Card>
                     </Link>
                     <Modal
-
                         size="sm"
                         show={show}
                         onHide={() => {
@@ -127,17 +126,13 @@ const Painel = observer(() => {
         </Container>
         <ToastContainer
             position="top-center"
-            autoClose={5000}
+            autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
             rtl={false}
-            pauseOnFocusLoss
             draggable
-            pauseOnHover
             theme="dark"
-            
-        
         />
         </>
     )

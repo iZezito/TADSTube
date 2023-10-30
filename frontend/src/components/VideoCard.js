@@ -9,7 +9,8 @@ const VideoCard = ({idVideo, titulo, thumbnail, usuario}) => {
         <Col>
                     <Link to={`/view/${idVideo}`} className='text-decoration-none'>
                     <Card bg='dark' style={{color: 'white'}}>
-                        <img src={`http://localhost:8080/resources/image/${thumbnail}`} alt={'thumbnail'}/>
+                        <img src={`http://10.77.115.210:8080/resources/image/${thumbnail}`} alt={'thumbnail'}
+                        />
                         <Card.Body>
                         <div class="row">
                             <div class="col-auto">

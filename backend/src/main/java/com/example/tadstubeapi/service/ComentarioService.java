@@ -16,5 +16,11 @@ public class ComentarioService extends GenericService<Comentario> {
     public List<Comentario> findAllByVideoId(Long idVideo) {
         return repository.findAllByVideoIdVideo(idVideo);
     }
+
+    public void updateComentario(Long id, String comentario) {
+        Comentario comentarioAtual = getById(id);
+        comentarioAtual.setTexto(comentario);
+        update(comentarioAtual);
+    }
 }
 

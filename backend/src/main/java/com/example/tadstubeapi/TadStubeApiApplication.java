@@ -32,7 +32,8 @@ public class TadStubeApiApplication {
 
         List<Usuario> users = Stream.of(
                 new Usuario(1L, "erick", encoder().encode("1234567")),
-                new Usuario(2L, "emerson", encoder().encode("1234567"))
+                new Usuario(2L, "emerson", encoder().encode("1234567")),
+                new Usuario(3L, "maia", encoder().encode("1234567"))
 
         ).collect(Collectors.toList());
 

@@ -59,8 +59,10 @@ import Form from 'react-bootstrap/Form';
 import videoStore from "../store/VideoStore";
 import {observer} from "mobx-react";
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const FileUpload = observer(() => {
+    const navigate = useNavigate();
 
     const handleFileVideo = (e) => {
         videoStore.setFile(e.target.files[0]);
@@ -71,6 +73,10 @@ const FileUpload = observer(() => {
             videoStore.setThumbnail(e.target.files[0]);
         }
 
+    }
+
+    const handleUpload = async () => {
+        await videoStore.handleUpload(navigate);
     }
 
     return (
@@ -116,7 +122,7 @@ const FileUpload = observer(() => {
                 <Form.Control value={videoStore.videoData.descricao} onChange={(e) => videoStore.setDescricao(e.target.value)} as="textarea" rows={3} />
             </Form.Group>
 
-            <Button variant="primary" onClick={videoStore.handleUpload}>Enviar</Button>
+            <Button variant="primary" onClick={handleUpload}>Enviar</Button>
             {videoStore.uploadProgress > 0 && <p>Progresso: {videoStore.uploadProgress}%</p>}
 
                     </>
@@ -125,14 +131,12 @@ const FileUpload = observer(() => {
             </Card.Body>
             <ToastContainer
             position="top-center"
-            autoClose={5000}
+            autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
             rtl={false}
-            pauseOnFocusLoss
             draggable
-            pauseOnHover
             theme="dark"
             
         

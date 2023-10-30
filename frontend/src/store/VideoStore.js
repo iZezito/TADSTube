@@ -1,7 +1,8 @@
 import api from "../service/Configuration";
 import {makeAutoObservable} from "mobx";
 import AuthStore from "./AuthStore";
-import { toast } from "react-toastify";
+import {toastErro, toastSucesso} from "../utils/Toaster";
+
 
 class VideoStore {
 
@@ -21,6 +22,8 @@ class VideoStore {
         resposta = {texto: '', usuario: { id: undefined }, dataResposta: new Date()}
         comentarioEdit = { idComentario: undefined, texto: '', usuario: { id: undefined }, video: { id: undefined }}
         respostaEdit = { idResposta: undefined, texto: '', usuario: { id: undefined }}
+        comentarioDeleteId = null
+        respostaDeleteId = null
 
     
 
@@ -29,18 +32,33 @@ class VideoStore {
             this.idUser = localStorage.getItem('idUser');
         }
 
-        toastSucesso(mensagem){
-            toast.success(mensagem, {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            })
+    editarResposta(idResposta, novoTexto) {
+        // Iterar sobre cada comentário na lista
+        for (let i = 0; i < this.comentarios.length; i++) {
+            const comentario = this.comentarios[i];
+
+            // Iterar sobre cada resposta no comentário
+            for (let j = 0; j < comentario.respostas.length; j++) {
+                const resposta = comentario.respostas[j];
+
+                // Verificar se o ID da resposta coincide
+                if (resposta.idResposta === idResposta) {
+                    // Atualizar o texto da resposta
+                    resposta.texto = novoTexto;
+
+                    // Agora você sabe a qual comentário a resposta pertence
+                    console.log('Resposta editada no comentário:', comentario);
+
+                    // Aqui você pode retornar ou fazer outras operações necessárias
+                    return;
+                }
+            }
         }
+
+        // Se você chegou até aqui, a resposta não foi encontrada
+        console.error('Resposta não encontrada');
+    }
+
 
         getVideos() {
             api.get('videos', {
@@ -83,7 +101,7 @@ class VideoStore {
             this.uploadProgress = uploadProgress;
         }
 
-        handleUpload = async () => {
+        handleUpload = async (navigate) => {
             if (!this.file) {
                 return;
             }
@@ -110,14 +128,24 @@ class VideoStore {
                 });
 
                 if (response.status === 200) {
+                    this.videoData = { titulo: '', descricao: '', usuario: { id: undefined }, dataUpload: new Date()}
+
                     console.log('Arquivo enviado com sucesso.');
-                    this.toastSucesso("video enviado com sucesso!")
+                    toastSucesso("video enviado com sucesso!")
+                    setTimeout(() => {
+                        // Suas regras de navegação aqui
+                        // Exemplo: navegar para '/outra-pagina'
+                        navigate('/');
+                    }, 3000);
+
+
 
                 } else {
                     console.error('Erro ao enviar o arquivo.');
                 }
             } catch (error) {
                 console.error('Erro durante o upload:', error);
+                toastErro("Erro ao enviar o vídeo!")
             }
         };
 
@@ -160,7 +188,7 @@ class VideoStore {
                 }
             }).then((response) => {
                 this.editing = false;
-                this.toastSucesso("vídeo editado com sucesso!")
+                toastSucesso("vídeo editado com sucesso!")
             }).catch((erro) => {
                 if (erro.status === 403) {
                     AuthStore.logout();
@@ -299,10 +327,89 @@ class VideoStore {
             }
         }).then((response) => {
             this.videosOfCanal = this.videosOfCanal.filter((item) => item.idVideo !== id)
-            this.toastSucesso("Vídeo deletado com sucesso!")
+            toastSucesso("Vídeo deletado com sucesso!")
 
         }).catch((erro) => console.log(erro))
 
+    }
+
+    setComentarioDeleteId(idComentario) {
+        this.comentarioDeleteId = idComentario;
+    }
+
+    setRespostaDeleteId(idResposta) {
+        this.respostaDeleteId = idResposta;
+
+    }
+
+    handleDeleteComentario() {
+            api.delete(`/comentarios/${this.comentarioDeleteId}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + AuthStore.getToken
+                }
+            }).then((response) => {
+                this.comentarios = this.comentarios.filter((item) => item.idComentario !== this.comentarioDeleteId)
+            }).catch((erro) => {
+                toastErro("Erro ao deletar o comentário!")
+                if (erro.status === 403) {
+                    AuthStore.logout();
+                }
+            })
+        }
+
+    deleteResposta() {
+            api.delete(`/respostas/${this.respostaDeleteId}/${this.comentarioDeleteId}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + AuthStore.getToken
+                }
+            }).then((response) => {
+                this.comentarios[this.comentarios.findIndex((comentario) => comentario.idComentario === this.comentarioDeleteId)].respostas = this.comentarios[this.comentarios.findIndex((comentario) => comentario.idComentario === this.comentarioDeleteId)].respostas.filter((item) => item.idResposta !== this.respostaDeleteId)
+            }).catch((erro) => {
+                toastErro("Erro ao deletar a resposta!")
+                if (erro.status === 403) {
+                    AuthStore.logout();
+
+                }
+            })
+    }
+
+    updateComentario(comentarioId) {
+        api.patch(`comentarios/${comentarioId}`, this.comentarioEdit, {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            console.log(response.data);
+            this.comentarios[this.comentarios.findIndex((comentario) => comentario.idComentario === comentarioId)].texto = response.data;
+            this.comentarioEdit.texto = '';
+        }).catch((erro) => {
+            toastErro("Erro ao editar o comentário!")
+            console.log(erro)
+            if (erro.response.status === 401) {
+                AuthStore.logout();
+            }
+        })
+    }
+
+    updateResposta(respostaComentarioId) {
+        api.patch(`respostas/${respostaComentarioId}`, this.respostaEdit, {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            this.editarResposta(respostaComentarioId, response.data)
+            console.log(this.comentarioDeleteId);
+
+
+
+            this.respostaEdit.texto = '';
+        }).catch((erro) => {
+            toastErro("Erro ao editar a resposta!")
+            console.log(erro);
+            if (erro.status === 401) {
+                AuthStore.logout();
+            }
+        })
     }
 }
 
