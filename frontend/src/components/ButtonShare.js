@@ -12,7 +12,7 @@ function VideoShareButton() {
 
   const shareViaWhatsApp = () => {
     const videoLink = window.location.href;
-    const whatsappLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(videoLink)}`;
+    const whatsappLink = `https://web.whatsapp.com/send?text=${encodeURIComponent(videoLink)}`;
     window.open(whatsappLink, '_blank');
   };
 

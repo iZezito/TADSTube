@@ -3,11 +3,13 @@ import Button from 'react-bootstrap/Button';
 import React, { useEffect, useRef, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { Modal } from "react-bootstrap";
 import Container from 'react-bootstrap/esm/Container';
 import { BsPersonCircle, BsBell, BsBellFill, BsPencil, BsXLg } from 'react-icons/bs';
 import {Link} from "react-router-dom";
 import { observer } from 'mobx-react';
 import store from '../store/VideoStore';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Painel = observer(() => {
     const [inscrito, setInscrito] = useState(false)
@@ -16,8 +18,18 @@ const Painel = observer(() => {
         store.getVideosOfCanal()
     }, []);
 
+    const [idVideoDelete, setIdVideoDelete] = useState(null)
+
+    const [show, setShow] = useState(false)
+
+    const handleDeleteVideo = () => {
+        store.deletarVideo(idVideoDelete)
+        setShow(false)
+    }
+
     return (
         <>  
+            
             <Card bg='dark' style={{color: 'white'}}>
                 <img  src={'https://yt3.googleusercontent.com/pf45dK2nb1pvzIuiReH-orvOeYml2iavnWpBZRXNreYT-jNNevGWjoJi50lh5yCRibhLkXKELw=w1138-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj'} alt={'thumbnail'}/>
                 <Card.Body>
@@ -68,17 +80,65 @@ const Painel = observer(() => {
                                     <Link to={'/upload'} onClick={() => store.setVideoEdit(item)} className='text-light text-decoration-none'><BsPencil/></Link>
                                 </div>
                                 <div className='col-1'>
-                                    <Link to={'/upload'} className='text-light text-decoration-none'><BsXLg/></Link>
+                                    <Link className='text-light text-decoration-none' onClick={() => {
+                                        setIdVideoDelete(item?.idVideo)
+                                        setShow(true)
+                                    }}><BsXLg/></Link>
                                 </div>
 
                             </div>
                             </Card.Body>
                         </Card>
                     </Link>
+                    <Modal
+
+                        size="sm"
+                        show={show}
+                        onHide={() => {
+                            setShow(false);
+                        }}
+                        aria-labelledby="example-modal-sizes-title-sm"
+                        >
+                        <Modal.Header closeButton>
+                            <Modal.Title id="example-modal-sizes-title-sm">
+                            Exclusão de Vídeo
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            Tem certeza que deseja excluir esse vídeo?
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                            variant="secondary"
+                            onClick={() => {
+                                setShow(false);
+                            }}
+                            >
+                            Cancelar
+                            </Button>
+                            <Button variant="danger"  onClick={handleDeleteVideo}>
+                            Excluir
+                            </Button>
+                        </Modal.Footer>
+                        </Modal>
                 </Col>
             ))}
             </Row>
         </Container>
+        <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            
+        
+        />
         </>
     )
 })

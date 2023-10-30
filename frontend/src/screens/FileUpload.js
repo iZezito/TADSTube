@@ -58,6 +58,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import videoStore from "../store/VideoStore";
 import {observer} from "mobx-react";
+import { ToastContainer, toast } from 'react-toastify';
 
 const FileUpload = observer(() => {
 
@@ -122,6 +123,20 @@ const FileUpload = observer(() => {
                     )}
 
             </Card.Body>
+            <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            
+        
+        />
         </Card>
     );
 });

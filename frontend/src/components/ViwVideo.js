@@ -17,7 +17,7 @@ import {
 import { observer } from "mobx-react";
 import store from "../store/VideoStore";
 import { MdSend } from "react-icons/md";
-import { Col, Modal } from "react-bootstrap";
+import { Col, Modal, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import VideoShareButton from '../components/ButtonShare'
 
@@ -317,9 +317,10 @@ const ViewVideo = observer(() => {
                             editingReplyId === resposta.idResposta;
 
                           return (
-                            <Card key={resposta.idResposta} className="mb-1" bg="dark" style={{ color: "white" }}>
+                            <>
                               {/* Resposta dos comentários */}
                                 {isReplyingToResponse ? (
+                                  <Card key={resposta.idResposta} className="mb-1" bg="dark" style={{ color: "white" }}>
                                     <Form className="bg-dark row">
                                         <Col md="9">
                                             <Form.Control
@@ -363,63 +364,71 @@ const ViewVideo = observer(() => {
                                             </Button>
                                         </Col>
                                     </Form>
+                                  </Card>
                                 ) : (
                                   <>
-                                    <p className={"text-start text-light"}>
-                                      {resposta.texto}
-                                    </p>
-                                    {resposta.usuario.id ===
-                                      Number(store.idUser) && (
-                                      <div className={"d-flex flex-column"}>
-                                        <button
-                                          className={
-                                            "align-self-end ms-auto btn-delete"
-                                          }
-                                          type="button"
-                                          data-bs-toggle="dropdown"
-                                          aria-expanded="false"
-                                        >
-                                          <BsThreeDotsVertical
-                                            color={"white"}
-                                          />
-                                          <ul className="dropdown-menu">
-                                            <li
-                                              className="dropdown-item"
-                                              onClick={() => {
-                                                setEditingReplyId(
-                                                  resposta.idResposta
-                                                );
-                                                setEditedReply(resposta.texto);
-                                                store.setRespostaEdit(
-                                                  resposta.texto
-                                                );
-                                              }}
+                                  <Card className="mb-1 bg-dark" style={{marginLeft: 40}}>
+                                    <Card.Body>
+                                      <Row>
+                                        <Col md="10">
+                                          <p className={"text-start text-light"}>
+                                            {resposta.texto}
+                                          </p>
+                                        </Col>
+                                        <Col md="2">
+                                        {resposta.usuario.id ===
+                                          Number(store.idUser) && (
+                                          <div className={"d-flex flex-column"}>
+                                            <button
+                                              className={
+                                                "align-self-end ms-auto btn-delete"
+                                              }
+                                              type="button"
+                                              data-bs-toggle="dropdown"
+                                              aria-expanded="false"
                                             >
-                                              Editar
-                                            </li>
-                                            <li
-                                              className="dropdown-item"
-                                              onClick={() => {
-                                                setSmShow(true);
-                                                setShow(false);
-                                                store.setRespostaDeleteId(
-                                                  resposta.idResposta
-                                                );
-                                                store.setComentarioDeleteId(
-                                                  comentario.idResposta
-                                                );
-                                              }}
-                                            >
-                                              Excluir
-                                            </li>
-                                          </ul>
-                                        </button>
-                                      </div>
-                                    )}
+                                              <BsThreeDotsVertical color={"white"}/>
+                                              <ul className="dropdown-menu">
+                                                <li
+                                                  className="dropdown-item"
+                                                  onClick={() => {
+                                                    setEditingReplyId(
+                                                      resposta.idResposta
+                                                    );
+                                                    setEditedReply(resposta.texto);
+                                                    store.setRespostaEdit(
+                                                      resposta.texto
+                                                    );
+                                                  }}
+                                                >
+                                                  Editar
+                                                </li>
+                                                <li
+                                                  className="dropdown-item"
+                                                  onClick={() => {
+                                                    setSmShow(true);
+                                                    setShow(false);
+                                                    store.setRespostaDeleteId(
+                                                      resposta.idResposta
+                                                    );
+                                                    store.setComentarioDeleteId(
+                                                      comentario.idResposta
+                                                    );
+                                                  }}
+                                                >
+                                                  Excluir
+                                                </li>
+                                              </ul>
+                                            </button>
+                                          </div>
+                                        )}
+                                        </Col>
+                                      </Row>
+                                    </Card.Body>
+                                  </Card>
                                   </>
                                 )}
-                            </Card>
-                          );
+                          </>);
                         })}
                       {replyingToCommentId === comentario.idComentario && (
                         <Form className="bg-dark row">

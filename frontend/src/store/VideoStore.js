@@ -1,7 +1,7 @@
 import api from "../service/Configuration";
 import {makeAutoObservable} from "mobx";
 import AuthStore from "./AuthStore";
-import store from "./Store";
+import { toast } from "react-toastify";
 
 class VideoStore {
 
@@ -22,9 +22,24 @@ class VideoStore {
         comentarioEdit = { idComentario: undefined, texto: '', usuario: { id: undefined }, video: { id: undefined }}
         respostaEdit = { idResposta: undefined, texto: '', usuario: { id: undefined }}
 
+    
+
         constructor() {
             makeAutoObservable(this);
             this.idUser = localStorage.getItem('idUser');
+        }
+
+        toastSucesso(mensagem){
+            toast.success(mensagem, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            })
         }
 
         getVideos() {
@@ -96,6 +111,8 @@ class VideoStore {
 
                 if (response.status === 200) {
                     console.log('Arquivo enviado com sucesso.');
+                    this.toastSucesso("video enviado com sucesso!")
+
                 } else {
                     console.error('Erro ao enviar o arquivo.');
                 }
@@ -143,6 +160,7 @@ class VideoStore {
                 }
             }).then((response) => {
                 this.editing = false;
+                this.toastSucesso("vídeo editado com sucesso!")
             }).catch((erro) => {
                 if (erro.status === 403) {
                     AuthStore.logout();
@@ -271,6 +289,20 @@ class VideoStore {
             }
             console.log(erro);
         })
+    }
+
+
+    deletarVideo(id){
+        api.delete(`/videos/${id}`, {
+            headers:{
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            this.videosOfCanal = this.videosOfCanal.filter((item) => item.idVideo !== id)
+            this.toastSucesso("Vídeo deletado com sucesso!")
+
+        }).catch((erro) => console.log(erro))
+
     }
 }
 
