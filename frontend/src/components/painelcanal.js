@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 import { observer } from 'mobx-react';
 import store from '../store/VideoStore';
 import { ToastContainer, toast } from 'react-toastify';
+import {urlBase} from "../utils/URLBase";
 
 const Painel = observer(() => {
     const [inscrito, setInscrito] = useState(false)
@@ -65,7 +66,7 @@ const Painel = observer(() => {
                 <Col key={idx}>
                     <Link to={'/view'} className='text-decoration-none'>
                         <Card bg='dark' style={{color: 'white'}}>
-                            <img src={`http://10.77.115.210:8080/resources/image/${item?.thumbnail}`} alt={'thumbnail'}/>
+                            <img src={`${urlBase}/resources/image/${item?.thumbnail}`} alt={'thumbnail'}/>
                             <Card.Body>
                             <div class="row">
                                 <div className="col-12">

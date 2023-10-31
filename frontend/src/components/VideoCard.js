@@ -3,13 +3,14 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import {BsPersonCircle } from 'react-icons/bs';
 import {Link} from "react-router-dom";
+import {urlBase} from "../utils/URLBase";
 const VideoCard = ({idVideo, titulo, thumbnail, usuario}) => {
 
     return (
         <Col>
                     <Link to={`/view/${idVideo}`} className='text-decoration-none'>
                     <Card bg='dark' style={{color: 'white'}}>
-                        <img src={`http://10.77.115.210:8080/resources/image/${thumbnail}`} alt={'thumbnail'}
+                        <img src={`${urlBase}/resources/image/${thumbnail}`} alt={'thumbnail'}
                         />
                         <Card.Body>
                         <div class="row">
