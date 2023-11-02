@@ -10,6 +10,7 @@ import NotFoundPage from "./screens/PaginaNaoEncontrada"
 import {observer} from "mobx-react";
 import AuthStore from "./store/AuthStore";
 import ViewVideo from "./components/ViwVideo";
+import Search from "./screens/Search";
 
 const App = observer(() => {
     const {isAuthenticated} = AuthStore;
@@ -29,6 +30,7 @@ const App = observer(() => {
                         {isAuthenticated && <Route exact path="/canal" element={<Painel />} />}
                         {isAuthenticated && <Route path="*" element={<NotFoundPage />} />}
                         {isAuthenticated && <Route path="/view/:id" element={<ViewVideo />} />}
+                        {isAuthenticated && <Route path="/search" element={<Search/>}/>}
                     </Routes>
                 </div>
 

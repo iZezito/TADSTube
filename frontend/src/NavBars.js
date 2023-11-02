@@ -17,12 +17,18 @@ import {Link} from "react-router-dom";
 import React from "react";
 import AuthStore from "./store/AuthStore";
 import { useNavigate } from "react-router-dom";
+import store from "./store/VideoStore";
+import {observer} from "mobx-react";
 
-function Menu() {
+const Menu = observer(() => {
   const navigate = useNavigate();
   const handleLogout = () => {
     AuthStore.logout();
     navigate('/login')
+  }
+  const handleSearch = () => {
+    store.searchVideos();
+    navigate('/search')
   }
   return (
     <>
@@ -38,8 +44,10 @@ function Menu() {
                   placeholder="Pesquisar"
                   className="me-2 flex-grow-1"
                   aria-label="Search"
+                  value={AuthStore.query}
+                  onChange={(e) => store.setQuery(e.target.value)}
                 />
-                <Button variant="outline-secondary"><BsSearch /></Button>
+                <Button variant="outline-secondary" onClick={handleSearch}><BsSearch /></Button>
               </div>
             </Form>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} className={'toggle'} />
@@ -79,6 +87,6 @@ function Menu() {
       ))}
     </>
   );
-}
+})
 
 export default Menu;

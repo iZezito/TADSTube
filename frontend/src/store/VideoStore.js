@@ -24,6 +24,9 @@ class VideoStore {
         respostaEdit = { idResposta: undefined, texto: '', usuario: { id: undefined }}
         comentarioDeleteId = null
         respostaDeleteId = null
+        query = '';
+        loading = false;
+        videosSearch = []
 
     
 
@@ -32,49 +35,69 @@ class VideoStore {
             this.idUser = localStorage.getItem('idUser');
         }
 
-    editarResposta(idResposta, novoTexto) {
-        // Iterar sobre cada comentário na lista
-        for (let i = 0; i < this.comentarios.length; i++) {
-            const comentario = this.comentarios[i];
-
-            // Iterar sobre cada resposta no comentário
-            for (let j = 0; j < comentario.respostas.length; j++) {
-                const resposta = comentario.respostas[j];
-
-                // Verificar se o ID da resposta coincide
-                if (resposta.idResposta === idResposta) {
-                    // Atualizar o texto da resposta
-                    resposta.texto = novoTexto;
-
-                    // Agora você sabe a qual comentário a resposta pertence
-                    console.log('Resposta editada no comentário:', comentario);
-
-                    // Aqui você pode retornar ou fazer outras operações necessárias
-                    return;
-                }
-            }
+        setQuery(query) {
+            this.query = query;
         }
 
-        // Se você chegou até aqui, a resposta não foi encontrada
-        console.error('Resposta não encontrada');
-    }
-
-
-        getVideos() {
-            api.get('videos', {
+        searchVideos() {
+            this.loading = true;
+            api.get(`videos/search/${this.query}`, {
                 headers: {
                     'Authorization': 'Bearer ' + AuthStore.getToken
                 }
             }).then((response) => {
-                console.log(response.data)
-                this.videos = response.data
+                this.videosSearch = response.data;
+                console.log('vídeos retornados na pesquisa', this.videosSearch);
             }).catch((erro) => {
-                if (erro.response.status === 403) {
-                    AuthStore.logout();
-                }
-            })
-
+                console.log(erro);
+            }).finally(() => {
+                this.loading = false;
+            });
         }
+
+        editarResposta(idResposta, novoTexto) {
+            // Iterar sobre cada comentário na lista
+            for (let i = 0; i < this.comentarios.length; i++) {
+                const comentario = this.comentarios[i];
+
+                // Iterar sobre cada resposta no comentário
+                for (let j = 0; j < comentario.respostas.length; j++) {
+                    const resposta = comentario.respostas[j];
+
+                    // Verificar se o ID da resposta coincide
+                    if (resposta.idResposta === idResposta) {
+                        // Atualizar o texto da resposta
+                        resposta.texto = novoTexto;
+
+                        // Agora você sabe a qual comentário a resposta pertence
+                        console.log('Resposta editada no comentário:', comentario);
+
+                        // Aqui você pode retornar ou fazer outras operações necessárias
+                        return;
+                    }
+                }
+            }
+
+            // Se você chegou até aqui, a resposta não foi encontrada
+            console.error('Resposta não encontrada');
+        }
+
+
+            getVideos() {
+                api.get('videos', {
+                    headers: {
+                        'Authorization': 'Bearer ' + AuthStore.getToken
+                    }
+                }).then((response) => {
+                    console.log(response.data)
+                    this.videos = response.data
+                }).catch((erro) => {
+                    if (erro.response.status === 403) {
+                        AuthStore.logout();
+                    }
+                })
+
+            }
 
         setTitulo(titulo) {
             this.videoData.titulo = titulo;
@@ -84,6 +107,7 @@ class VideoStore {
 
         setDescricao(descricao) {
             this.videoData.descricao = descricao;
+
         }
 
         setFile(file) {

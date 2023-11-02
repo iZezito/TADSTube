@@ -2,6 +2,8 @@ package com.example.tadstubeapi.service;
 
 import com.example.tadstubeapi.generics.GenericService;
 import com.example.tadstubeapi.model.Video;
+import com.example.tadstubeapi.repository.VideoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +13,9 @@ import java.util.List;
 
 @Service
 public class VideoService extends GenericService<Video> {
+
+    @Autowired
+    private VideoRepository repositorio;
 
     public String armazenarVideo(MultipartFile file, Long idUser) throws IOException {
         File uploadDir = new File("upload-dir");
@@ -49,5 +54,9 @@ public class VideoService extends GenericService<Video> {
 
     public List<Video> getVideosByUser(Long id) {
         return repository.findAllByUsuarioId(id);
+    }
+
+    public List<Video> getVideosBySearch(String search) {
+        return repositorio.findAllByTituloContainingIgnoreCase(search);
     }
 }

@@ -86,6 +86,16 @@ public class VideoController extends GenericRestController<Video> {
             return ResponseEntity.ok(videos);
         }
 
+        @GetMapping("/search/{search}")
+        public ResponseEntity<List<Video>> getVideosBySearch(@PathVariable String search) {
+            System.out.println("Buscando por: " + search);
+            List<Video> videos = service.getVideosBySearch(search);
+            if(videos.isEmpty())
+                return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(videos);
+        }
+
+
 //        @GetMapping("/download/{id:.+}")
 //        public ResponseEntity<Resource> downloadVideo(@PathVariable Long id) {
 //            Video video = service.getById(id);

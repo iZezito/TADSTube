@@ -11,4 +11,5 @@ import java.util.List;
 public interface GenericRepository<T> extends JpaRepository<T, Long> {
     List<T> findAllByUsuarioId(Long idUsuario);
 
+
 }
