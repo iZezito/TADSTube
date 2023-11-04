@@ -287,6 +287,7 @@ class VideoStore {
             }
         }).then((response) => {
             //adicione como o primeiro elemento do array
+            this.comentario.texto = '';
             this.comentarios.unshift(response.data);
         }).catch((erro) => {
             if (erro.status === 403) {
@@ -333,7 +334,7 @@ class VideoStore {
         }).then((response) => {
             console.log(response.data);
             this.comentarios[this.comentarios.findIndex((comentario) => comentario.idComentario === comentarioId)].respostas.push(response.data);
-            this.respostaComentario.texto = '';
+            this.resposta.texto = '';
         }).catch((erro) => {
             console.log('Consolezada:', erro);
             if (erro.status === 401) {
@@ -423,9 +424,6 @@ class VideoStore {
         }).then((response) => {
             this.editarResposta(respostaComentarioId, response.data)
             console.log(this.comentarioDeleteId);
-
-
-
             this.respostaEdit.texto = '';
         }).catch((erro) => {
             toastErro("Erro ao editar a resposta!")
