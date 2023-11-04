@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
 import { BsPlayBtnFill } from 'react-icons/bs';
 import {observer} from "mobx-react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import AuthStore from "../store/AuthStore";
 import { toastErro} from "../utils/Toaster";
 import { ToastContainer } from "react-toastify";
@@ -48,7 +48,7 @@ const LoginPage = observer(() => {
             <br></br>
             </>
             <Form.Group>
-              <Button variant="danger" className="justify-content-center" type={'submit'}>Entrar</Button>
+              <Button variant="danger" className="justify-content-center" type={'submit'}>Entrar</Button><Link to={'/signup'}>SingUp</Link>
             </Form.Group>
           </Form>
 
