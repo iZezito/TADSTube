@@ -1,6 +1,6 @@
 import {action, makeAutoObservable, makeObservable, observable} from 'mobx';
 import api from "../service/Configuration";
-import store from "./Store";
+import store from "./VideoStore";
 
 class AuthStore {
     isAuthenticated = false;
@@ -25,7 +25,6 @@ class AuthStore {
             this.isAuthenticated = true;
             this.token = response.data.token;
             localStorage.setItem('idUser', response.data.idUser);
-            store.user = response.data.subject;
             return this.isAuthenticated;
         } catch (error) {
             console.log(error);
