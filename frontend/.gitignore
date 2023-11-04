@@ -22,6 +22,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
-./frontend/src/service/Configuration.js
-./src/service/Configuration.js
