@@ -128,6 +128,7 @@ const ViewVideo = observer(() => {
                 </div>
               </Card.Body>
               <Card.Footer>
+                <Card.Title>{store?.numeroVisualizacoes} Visualizações</Card.Title>
                 <Card.Text>{store.videoView?.descricao}</Card.Text>
               </Card.Footer>
             </Card>

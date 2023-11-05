@@ -27,7 +27,8 @@ class VideoStore {
         query = '';
         loading = false;
         videosSearch = []
-
+        visualizacao = { usuario: { id: undefined }, video: { id: undefined }, dataVisualizacao: undefined}
+        numeroVisualizacoes = 0
     
 
         constructor() {
@@ -229,12 +230,31 @@ class VideoStore {
                 });
 
                 this.videoView = response.data;
+                await this.getVisualizacao();
+                await this.insertVisualizacao();
                 return this.downloadVideo()
+
             } catch (error) {
                 if (error.status === 403) {
                     AuthStore.logout();
                 }
             }
+        }
+
+        async insertVisualizacao() {
+            this.visualizacao.usuario.id = Number(this.idUser);
+            this.visualizacao.video.idVideo = this.videoView.idVideo;
+            this.visualizacao.dataVisualizacao = new Date();
+
+            api.post(`/visualizacoes/video`, this.visualizacao, {
+                headers: {
+                    'Authorization': 'Bearer ' + AuthStore.getToken
+                }
+            }).then((response) => {
+                console.log(response.data);
+            }).catch((erro) => {
+              console.log(erro);
+            })
         }
 
 
@@ -434,6 +454,19 @@ class VideoStore {
             if (erro.status === 401) {
                 AuthStore.logout();
             }
+        })
+    }
+
+    async getVisualizacao() {
+        api.get(`/visualizacoes/video/${this.videoView.idVideo}`, {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            this.numeroVisualizacoes = response.data;
+            console.log('Visualizações: ', this.numeroVisualizacoes);
+        }).catch((erro) => {
+            console.log(erro);
         })
     }
 }
