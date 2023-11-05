@@ -32,6 +32,10 @@ const ViewVideo = observer(() => {
     };
     init();
     store.loadComentarios(id);
+    return () => {
+        store.clear();
+    }
+
   }, []);
   const [show, setShow] = useState(false);
   const [indexNoticia, setIndexNoticia] = useState(0);

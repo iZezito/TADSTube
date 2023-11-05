@@ -469,6 +469,11 @@ class VideoStore {
             console.log(erro);
         })
     }
+
+    clear() {
+        this.videoView = { idVideo: undefined, titulo: '', descricao: '', usuario: { id: undefined }, dataUpload: new Date(), url:''}
+        this.numeroVisualizacoes = 0;
+    }
 }
 
 const videoStore = new VideoStore();
