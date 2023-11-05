@@ -24,7 +24,7 @@ public class Video {
     @Column(name = "Titulo", nullable = false)
     private String titulo;
 
-    @Column(name = "Descricao")
+    @Column(name = "Descricao", columnDefinition = "TEXT")
     private String descricao;
 
     @Column(name = "DataUpload")

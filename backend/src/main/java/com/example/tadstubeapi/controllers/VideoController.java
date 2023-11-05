@@ -2,6 +2,7 @@ package com.example.tadstubeapi.controllers;
 
 import com.example.tadstubeapi.generics.GenericRestController;
 import com.example.tadstubeapi.model.Video;
+import com.example.tadstubeapi.service.ComentarioService;
 import com.example.tadstubeapi.service.VideoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletOutputStream;
@@ -50,6 +51,9 @@ public class VideoController extends GenericRestController<Video> {
         @Autowired
         public VideoService service;
 
+        @Autowired
+        public ComentarioService comentarioService;
+
         @PostMapping("/upload")
         public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("videoData") String video, @RequestParam("thumbnail") MultipartFile thumbnail) {
             // Converter a string JSON de videoData que é o objeto 'video' para o objeto do tipo Video
@@ -93,6 +97,17 @@ public class VideoController extends GenericRestController<Video> {
             if(videos.isEmpty())
                 return ResponseEntity.notFound().build();
             return ResponseEntity.ok(videos);
+        }
+
+        @DeleteMapping(path = {"/{id}"})
+        public ResponseEntity<Video> delete(@PathVariable Long id) {
+            Video video = service.getById(id);
+            if(video == null){
+                return ResponseEntity.notFound().build();
+            }
+            comentarioService.deleteAllComentariosByVideo(id);
+            service.delete(video);
+            return ResponseEntity.ok().build();
         }
 
 

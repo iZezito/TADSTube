@@ -20,7 +20,7 @@ public class Resposta {
     @Column(name = "IDResposta")
     private Long idResposta;
 
-    @Column(name = "Texto", nullable = false)
+    @Column(name = "Texto", nullable = false, columnDefinition = "TEXT")
     private String texto;
 
     @Column(name = "DataResposta")

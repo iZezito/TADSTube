@@ -354,7 +354,10 @@ class VideoStore {
             this.videosOfCanal = this.videosOfCanal.filter((item) => item.idVideo !== id)
             toastSucesso("Vídeo deletado com sucesso!")
 
-        }).catch((erro) => console.log(erro))
+        }).catch((erro) => {
+            toastErro("Erro ao deletar o vídeo!")
+            console.log(erro)
+        })
 
     }
 

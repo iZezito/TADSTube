@@ -3,6 +3,8 @@ package com.example.tadstubeapi.model;
 import jakarta.persistence.*;
 import com.example.tadstubeapi.usuario.Usuario;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class Comentario {
     @Column(name = "IDComentario")
     private Long idComentario;
 
-    @Column(name = "Texto", nullable = false)
+    @Column(name = "Texto", nullable = false, columnDefinition = "TEXT")
     private String texto;
 
     @Column(name = "DataComentario")

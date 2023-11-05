@@ -22,5 +22,12 @@ public class ComentarioService extends GenericService<Comentario> {
         comentarioAtual.setTexto(comentario);
         update(comentarioAtual);
     }
+
+    public void deleteAllComentariosByVideo(Long idVideo) {
+        List<Comentario> comentarios = findAllByVideoId(idVideo);
+        for (Comentario comentario : comentarios) {
+            delete(comentario);
+        }
+    }
 }
 
