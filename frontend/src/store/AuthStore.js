@@ -23,6 +23,7 @@ class AuthStore {
             console.log(response.data);
             localStorage.setItem('token', response.data.token);
             this.isAuthenticated = true;
+            store.idUser = response.data.idUser;
             this.token = response.data.token;
             localStorage.setItem('idUser', response.data.idUser);
             return this.isAuthenticated;
@@ -35,7 +36,7 @@ class AuthStore {
 
     logout() {
         localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        localStorage.removeItem('idUser');
         this.isAuthenticated = false;
         this.token = null;
         store.user = null;
