@@ -25,7 +25,7 @@ const Search = observer(() => {
                 <Card bg='dark' style={{color: 'white'}}>
                     <Card.Body>
                         <div class="row">
-                            <div class="col-4"><img src={`${urlBase}/resources/image/${video?.thumbnail}`} style={{maxWidth:400, height:150}} alt={'thumbnail'}/></div>
+                            <div class="col-4"><img src={`${urlBase}/resources/image/${video?.thumbnail}`} style={{maxWidth:400, maxHeight:150}} alt={'thumbnail'}/></div>
                             <div class="col-8">
                                 <Card.Title>{video?.titulo}</Card.Title>
                                 { /* card.text onde é um small text */}

@@ -154,6 +154,7 @@ class VideoStore {
 
 
         try {
+            this.loading = true;
             const response = await api.post('/videos/upload', formData, {
                 headers: {
                     // Adicione quaisquer cabeçalhos necessários aqui
@@ -168,6 +169,8 @@ class VideoStore {
 
             if (response.status === 200) {
                 this.videoData = {titulo: '', descricao: '', usuario: {id: undefined}, dataUpload: new Date()}
+                this.thumbnail = undefined;
+                this.thumbURL = undefined;
 
                 console.log('Arquivo enviado com sucesso.');
                 toastSucesso("video enviado com sucesso!")
@@ -184,6 +187,9 @@ class VideoStore {
         } catch (error) {
             console.error('Erro durante o upload:', error);
             toastErro("Erro ao enviar o vídeo!")
+        } finally {
+            this.loading = false;
+            this.setUploadProgress(0);
         }
     };
 

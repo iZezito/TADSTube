@@ -30,6 +30,7 @@ public class Usuario implements UserDetails {
     @NotBlank
     @Column(unique = true)
     private String login;
+    private String email;
     @NotBlank
     @Size(min = 6)
     private String senha;

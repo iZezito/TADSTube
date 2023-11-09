@@ -36,7 +36,7 @@ const Menu = observer(() => {
           <>
         <Navbar key={expand} expand={expand} className="bg-dark mb-2 nav-grid"  bg="dark" data-bs-theme="dark">
           <Container fluid>
-            <Navbar.Brand href="#" style={{color: 'white'}}><BsPlayBtnFill style={{width: 30, height: 30, color: 'red'}}/> TADStube</Navbar.Brand>
+            <Navbar.Brand href="/" style={{color: 'white'}}><BsPlayBtnFill style={{width: 30, height: 30, color: 'red'}}/> TADStube</Navbar.Brand>
             <Form className="d-none d-md-block d-lg-block mx-auto text-center min-width-form" id={`offcanvasNavbar-expand-${expand}`}>
               <div className="d-flex" style={{}}>
                 <Form.Control

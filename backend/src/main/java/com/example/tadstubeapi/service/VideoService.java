@@ -1,6 +1,7 @@
 package com.example.tadstubeapi.service;
 
 import com.example.tadstubeapi.generics.GenericService;
+import com.example.tadstubeapi.model.Inscricao;
 import com.example.tadstubeapi.model.Video;
 import com.example.tadstubeapi.repository.InscricaoRepository;
 import com.example.tadstubeapi.repository.VideoRepository;
@@ -24,6 +25,9 @@ public class VideoService extends GenericService<Video> {
 
     @Autowired
     private VisualizacaoRepository visualizacaoRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     public String armazenarVideo(MultipartFile file, Long idUser) throws IOException {
         File uploadDir = new File("upload-dir");
@@ -89,5 +93,16 @@ public class VideoService extends GenericService<Video> {
         }
 
 
+    }
+
+    public void sendEmails(List<Inscricao> inscricoes, Video video) {
+        for(var inscrito : inscricoes){
+            System.out.println("Enviando email para " + inscrito.getInscrito().getLogin() + "..." + "Email: " + inscrito.getInscrito().getEmail());
+            System.out.println("Id do video: " + video.getIdVideo());
+            String email = inscrito.getInscrito().getEmail();
+            String titulo = "Novo vídeo no canal " + inscrito.getUsuario().getLogin();
+            String mensagem = "Olá, " + inscrito.getInscrito().getLogin() + "! O canal " + inscrito.getUsuario().getLogin() + " postou um novo vídeo: " + video.getTitulo();
+            emailService.sendEmail(email, titulo, mensagem);
+        }
     }
 }

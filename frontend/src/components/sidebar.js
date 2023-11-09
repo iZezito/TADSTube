@@ -5,8 +5,9 @@ import {BsBoxArrowInRight, BsPersonSquare, BsHouseDoor, BsPlayBtn} from "react-i
 import Inscricao from "./inscricao";
 import AuthStore from "../store/AuthStore";
 import { useNavigate } from "react-router-dom";
+import {observer} from "mobx-react";
 
-export default function Sidebar(){
+const Sidebar = observer(() => {
     const navigate = useNavigate();
     const handleLogout = () => {
         AuthStore.logout();
@@ -15,16 +16,6 @@ export default function Sidebar(){
     return(
         <div className="side-grid">
             <Nav defaultActiveKey="/" className="flex-column">
-                {/*<Row>*/}
-                {/*    <Col className={'mx-2'}>*/}
-                {/*        <Link to={'/perfil'} className={'nav-link text-light mb-2'}>Perfil</Link>*/}
-                {/*    </Col>*/}
-                {/*    <Col className={'mx-0'}>*/}
-                {/*        <Link to={'/perfil'} className={'nav-link text-light'}>Perfil</Link>*/}
-                {/*    </Col>*/}
-                {/*</Row>*/}
-
-
                 <Link to={'/'} className={'nav-link text-light'}><BsHouseDoor style={{ width: 20, height: 20 }} /> Início</Link>
                 <Link to={'/canal'} className={'nav-link text-light'}><BsPersonSquare style={{ width: 20, height: 20 }} /> Seu canal</Link>
                 <Link to={'/upload'} className={'nav-link text-light'}><BsPlayBtn style={{ width: 20, height: 20 }}/> Enviar vídeo</Link>
@@ -41,4 +32,6 @@ export default function Sidebar(){
             </Nav>
         </div>
     )
-}
+})
+
+export default Sidebar;

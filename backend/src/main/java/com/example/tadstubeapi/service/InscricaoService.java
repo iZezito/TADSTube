@@ -6,6 +6,8 @@ import com.example.tadstubeapi.repository.InscricaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class InscricaoService extends GenericService<Inscricao> {
 
@@ -18,6 +20,10 @@ public class InscricaoService extends GenericService<Inscricao> {
 
     public Inscricao findByInscritoIdAndUsuarioId(Long id, Long id1) {
         return repository.findByInscritoIdAndUsuarioId(id, id1).orElse(null);
+    }
+
+    public List<Inscricao> findAllByUsuarioId(Long id) {
+        return repository.findAllByUsuarioId(id);
     }
 }
 

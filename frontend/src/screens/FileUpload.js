@@ -67,9 +67,13 @@ const FileUpload = observer(() => {
                 <Form.Label>Descrição</Form.Label>
                 <Form.Control value={videoStore.videoData.descricao} onChange={(e) => videoStore.setDescricao(e.target.value)} as="textarea" rows={3} />
             </Form.Group>
+                        {videoStore.loading ? (
+                            <Button variant="primary" disabled>Enviando...</Button>
+                        ) : (
+                            <Button variant="primary" onClick={handleUpload}>Enviar</Button>
+                        )}
 
-            <Button variant="primary" onClick={handleUpload}>Enviar</Button>
-            {videoStore.uploadProgress > 0 && <p>Progresso: {videoStore.uploadProgress}%</p>}
+            {videoStore.uploadProgress > 0 && <p>Enviando arquivos: {videoStore.uploadProgress}%</p>}
 
                     </>
                     )}

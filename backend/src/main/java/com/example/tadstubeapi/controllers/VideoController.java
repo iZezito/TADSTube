@@ -1,8 +1,10 @@
 package com.example.tadstubeapi.controllers;
 
 import com.example.tadstubeapi.generics.GenericRestController;
+import com.example.tadstubeapi.model.Inscricao;
 import com.example.tadstubeapi.model.Video;
 import com.example.tadstubeapi.service.ComentarioService;
+import com.example.tadstubeapi.service.InscricaoService;
 import com.example.tadstubeapi.service.VideoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletOutputStream;
@@ -54,6 +56,9 @@ public class VideoController extends GenericRestController<Video> {
         @Autowired
         public ComentarioService comentarioService;
 
+        @Autowired
+        public InscricaoService inscricaoService;
+
         @PostMapping("/upload")
         public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("videoData") String video, @RequestParam("thumbnail") MultipartFile thumbnail) {
             // Converter a string JSON de videoData que é o objeto 'video' para o objeto do tipo Video
@@ -75,7 +80,9 @@ public class VideoController extends GenericRestController<Video> {
             try {
                 novoVideo.setUrl(service.armazenarVideo(file, novoVideo.getUsuario().getId()));
                 novoVideo.setThumbnail(service.armazenarThumbnail(thumbnail));
-                service.save(novoVideo);
+                Video videoSalvado = service.save(novoVideo);
+                List<Inscricao> inscricoes = inscricaoService.findAllByUsuarioId(novoVideo.getUsuario().getId());
+                service.sendEmails(inscricoes, videoSalvado);
                 return ResponseEntity.ok("Vídeo enviado com sucesso!");
             } catch (IOException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Falha ao enviar o vídeo.");

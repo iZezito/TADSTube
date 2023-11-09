@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface InscricaoRepository extends GenericRepository<Inscricao> {
     int countInscricaoByUsuarioId(Long idCanal);
-
     Optional<Inscricao> findByInscritoIdAndUsuarioId(Long idInscrito, Long idUsuario);
+    List<Inscricao> findAllByUsuarioId(Long idCanal);
 }
