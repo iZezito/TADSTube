@@ -99,10 +99,26 @@ public class VideoService extends GenericService<Video> {
         for(var inscrito : inscricoes){
             System.out.println("Enviando email para " + inscrito.getInscrito().getLogin() + "..." + "Email: " + inscrito.getInscrito().getEmail());
             System.out.println("Id do video: " + video.getIdVideo());
-            String email = inscrito.getInscrito().getEmail();
+            String email = inscrito.getUsuario().getEmail();
             String titulo = "Novo vídeo no canal " + inscrito.getUsuario().getLogin();
-            String mensagem = "Olá, " + inscrito.getInscrito().getLogin() + "! O canal " + inscrito.getUsuario().getLogin() + " postou um novo vídeo: " + video.getTitulo();
-            emailService.sendEmail(email, titulo, mensagem);
+            String path = "thumbnail-dir/" + video.getThumbnail();
+//            String mensagem = "Olá, " + inscrito.getInscrito().getLogin() + "! O canal " + inscrito.getUsuario().getLogin() + " postou um novo vídeo: " + video.getTitulo();
+            String mensagem = "<div class=\"card bg-dark text-white\">\n" +
+                    "    <img src='cid:image' alt=\"thumbnail\" />\n" +
+                    "\n" +
+                    "    <div class=\"card-body\">\n" +
+                    "        <div class=\"row\">\n" +
+                    "            <div class=\"col-auto\">\n" +
+                    "                <h5 style=\"width: 50px; height: 50px;\"><!-- Ícone de pessoa --></h5>\n" +
+                    "            </div>\n" +
+                    "            <div class=\"col\">\n" +
+                    "                <h5>" + video.getTitulo() + "</h5>\n" +
+                    "                <p>" + inscrito.getUsuario().getLogin() + "</p>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "</div>";
+            emailService.sendEmailWithInlineImage(email, titulo, mensagem, path);
         }
     }
 }
