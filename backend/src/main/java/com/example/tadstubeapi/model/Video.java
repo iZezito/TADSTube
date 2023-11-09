@@ -38,6 +38,12 @@ public class Video {
 
     private String thumbnail;
 
+    @Transient
+    private int visualizacoes;
+
+    @Transient
+    private int inscricoes;
+
 
     // Getters, setters e construtores
 }

@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import {BsPersonCircle } from 'react-icons/bs';
 import {Link} from "react-router-dom";
 import {urlBase} from "../utils/URLBase";
-const VideoCard = ({idVideo, titulo, thumbnail, usuario}) => {
+const VideoCard = ({idVideo, titulo, thumbnail, usuario, visualizacoes}) => {
 
     return (
         <Col>
@@ -21,6 +21,9 @@ const VideoCard = ({idVideo, titulo, thumbnail, usuario}) => {
                                 <Card.Title>{titulo}</Card.Title>
                                 <Card.Text>
                                     {usuario?.login}
+                                </Card.Text>
+                                <Card.Text>
+                                    {visualizacoes} visualizações
                                 </Card.Text>
                             </div>
                         </div>

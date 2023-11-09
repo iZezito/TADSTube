@@ -2,7 +2,9 @@ package com.example.tadstubeapi.service;
 
 import com.example.tadstubeapi.generics.GenericService;
 import com.example.tadstubeapi.model.Video;
+import com.example.tadstubeapi.repository.InscricaoRepository;
 import com.example.tadstubeapi.repository.VideoRepository;
+import com.example.tadstubeapi.repository.VisualizacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +18,12 @@ public class VideoService extends GenericService<Video> {
 
     @Autowired
     private VideoRepository repositorio;
+
+    @Autowired
+    private InscricaoRepository inscricaoRepository;
+
+    @Autowired
+    private VisualizacaoRepository visualizacaoRepository;
 
     public String armazenarVideo(MultipartFile file, Long idUser) throws IOException {
         File uploadDir = new File("upload-dir");
@@ -58,5 +66,28 @@ public class VideoService extends GenericService<Video> {
 
     public List<Video> getVideosBySearch(String search) {
         return repositorio.findAllByTituloContainingIgnoreCase(search);
+    }
+
+    @Override
+    public List<Video> findAll(){
+        List<Video> videos = repositorio.findAll();
+        for (Video video : videos) {
+            video.setVisualizacoes(visualizacaoRepository.countVisualizacaoByVideoIdVideo(video.getIdVideo()));
+        }
+        return videos;
+    }
+
+    @Override
+    public Video getById(Long id){
+        Video video = repositorio.findById(id).orElse(null);
+        if(video == null){
+            return null;
+        } else {
+            video.setVisualizacoes(visualizacaoRepository.countVisualizacaoByVideoIdVideo(video.getIdVideo()));
+            video.setInscricoes(inscricaoRepository.countInscricaoByUsuarioId(video.getUsuario().getId()));
+            return video;
+        }
+
+
     }
 }

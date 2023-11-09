@@ -97,7 +97,7 @@ const ViewVideo = observer(() => {
                           {store.videoView?.usuario?.login}
                         </Card.Title>
                         <Card.Text style={{ fontSize: 10 }}>
-                          140 mil inscritos
+                          {store.videoView?.inscricoes} inscritos
                         </Card.Text>
                       </div>
                     </div>
@@ -105,25 +105,22 @@ const ViewVideo = observer(() => {
                   <div class="col-auto">
                     <Card.Title>
                       {" "}
-                      {inscrito ? (
-                        <Button
-                          variant="outline-light"
-                          onClick={() => setInscrito(false)}
-                          className="justify-content-center"
-                          style={{ borderRadius: 100 }}
-                        >
-                          <BsBellFill /> Inscrito
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="outline-light"
-                          onClick={() => setInscrito(true)}
-                          className="justify-content-center"
-                          style={{ borderRadius: 100 }}
-                        >
-                          <BsBell /> Inscrever-se
-                        </Button>
-                      )}
+                      {store.videoView?.usuario?.id !== Number(store.idUser) && (
+                          <Button
+                              variant="outline-light"
+                              onClick={() => store.changeInscricao()}
+                              className="justify-content-center"
+                              style={{ borderRadius: 100 }}
+                          >
+                            {store.inscrito ? (
+                                <BsBellFill />
+                            ) : (
+                                <BsBell />
+                            )}
+                            {store.inscrito ? " Inscrito" : " Inscrever-se"}
+                          </Button>
+                      )
+                      }
                     </Card.Title>
                   </div>
                   <div className="col-auto"> 
@@ -132,7 +129,7 @@ const ViewVideo = observer(() => {
                 </div>
               </Card.Body>
               <Card.Footer>
-                <Card.Title>{store?.numeroVisualizacoes} Visualizações</Card.Title>
+                <Card.Title>{store?.videoView?.visualizacoes} Visualizações</Card.Title>
                 <Card.Text>{store.videoView?.descricao}</Card.Text>
               </Card.Footer>
             </Card>

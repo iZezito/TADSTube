@@ -1,64 +1,10 @@
-//import React, { useRef, useState } from 'react';
-//import axios from "axios";
-
-// function VideoPlayer() {
-//   const videoRef = useRef(null);
-//   const [isPlaying, setIsPlaying] = useState(false);
-//
-//   const handlePlay = async () => {
-//     setIsPlaying(true);
-//
-//       axios.get('http://10.77.115.210:8080/stream/Alugamos_um_CARRO_de_TR_S_RODAS___.mp4', {
-//           responseType: 'blob',  // Define o tipo de resposta como blob
-//       })
-//           .then(response => {
-//               const videoUrl = URL.createObjectURL(response.data);
-//               videoRef.current.src = videoUrl;
-//               videoRef.current.play();
-//           })
-//           .catch(error => {
-//               console.error('Erro ao reproduzir o vídeo:', error);
-//           });
-//
-//     // try {
-//     //   const response = await fetch('http://localhost:8080/stream/SnapInsta.io-PACOTE CHAMPIONS 2023 💢 _ VALE A PENA OU NÃO.mp4');
-//     //   if (!response.ok) {
-//     //     throw new Error('Falha ao obter o vídeo.');
-//     //   }
-//     //
-//     //   const blob = await response.blob();
-//     //   const videoUrl = URL.createObjectURL(blob);
-//     //   videoRef.current.src = videoUrl;
-//     //   videoRef.current.play();
-//     // } catch (error) {
-//     //   console.error('Erro ao reproduzir o vídeo:', error);
-//     // }
-//   };
-//
-//   return (
-//       <div>
-//         <h2>Player de Vídeo</h2>
-//         <video ref={videoRef} controls={true} width="640" height="360" />
-//         <button onClick={handlePlay} disabled={isPlaying}>
-//           Reproduzir Vídeo
-//         </button>
-//       </div>
-//   );
-// }
-//
-// export default VideoPlayer;
-
-
-
-//
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import videoStore from "../store/VideoStore";
 import {observer} from "mobx-react";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const FileUpload = observer(() => {
