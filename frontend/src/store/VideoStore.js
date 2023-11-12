@@ -39,6 +39,7 @@ class VideoStore {
     inscrito = false
     inscricao = {inscrito: {id: undefined}, usuario: {id: undefined}, dataInscricao: new Date()}
     inscritos = 0
+    inscricoes = []
 
 
     constructor() {
@@ -68,6 +69,19 @@ class VideoStore {
         }).finally(() => {
             this.loading = false;
         });
+    }
+
+    loadInscricoes() {
+        api.get(`/inscricoes/inscritos/${this.idUser}`, {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            this.inscricoes = response.data;
+            console.log('inscrições', this.inscricoes);
+        }).catch((erro) => {
+            console.log(erro);
+        })
     }
 
     editarResposta(idResposta, novoTexto) {

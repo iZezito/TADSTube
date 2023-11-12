@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Nav from "react-bootstrap/Nav";
 import {Link} from "react-router-dom";
 import {BsBoxArrowInRight, BsPersonSquare, BsHouseDoor, BsPlayBtn} from "react-icons/bs";
@@ -6,9 +6,14 @@ import Inscricao from "./inscricao";
 import AuthStore from "../store/AuthStore";
 import { useNavigate } from "react-router-dom";
 import {observer} from "mobx-react";
+import store from "../store/VideoStore";
 
 const Sidebar = observer(() => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        store.loadInscricoes();
+    }, []);
     const handleLogout = () => {
         AuthStore.logout();
         navigate('/login')
@@ -22,8 +27,8 @@ const Sidebar = observer(() => {
                 <hr className="my-2" style={{ borderColor: 'white' }} />
                 <Link className={'nav-link text-light h1'}>Inscrições</Link>
                 <div className={'overflow-auto'} style={{ maxHeight: '290px' }}>
-                    {Array.from({ length: 19 }).map((_, idx) => (
-                        <Inscricao key={idx}/>
+                    {store.inscricoes?.map((item, idx) => (
+                        <Inscricao key={idx} {...item}/>
                     ))}
                 </div>
                 <hr className="my-2" style={{ borderColor: 'white' }} />

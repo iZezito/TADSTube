@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/inscricoes")
@@ -38,6 +40,11 @@ public class InscricaoController extends GenericRestController<Inscricao>{
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/inscritos/{id}")
+    public ResponseEntity<?> getInscritosByUsuarioId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findAllByInscritoId(id));
     }
 
 

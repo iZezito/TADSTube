@@ -25,5 +25,9 @@ public class InscricaoService extends GenericService<Inscricao> {
     public List<Inscricao> findAllByUsuarioId(Long id) {
         return repository.findAllByUsuarioId(id);
     }
+
+    public List<Inscricao> findAllByInscritoId(Long id) {
+        return repository.findAllByInscritoId(id);
+    }
 }
 
