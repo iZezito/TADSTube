@@ -65,8 +65,8 @@ const Painel = observer(() => {
             {store?.videosOfCanal.map((item, idx) => (
                 <Col key={idx}>
                     <Link to={'/view'} className='text-decoration-none'>
-                        <Card bg='dark' style={{color: 'white'}}>
-                            <img src={`${urlBase}/resources/image/${item?.thumbnail}`} alt={'thumbnail'}/>
+                        <Card bg='dark' style={{color: 'white', height: 270, width: 410}}>
+                            <img src={`${urlBase}/resources/image/${item?.thumbnail}`} alt={'thumbnail'} style={{height: 190, width: 410}}/>
                             <Card.Body>
                             <div class="row">
                                 <div className="col-12">
