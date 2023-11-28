@@ -99,7 +99,7 @@ public class VideoService extends GenericService<Video> {
         for(var inscrito : inscricoes){
             System.out.println("Enviando email para " + inscrito.getInscrito().getLogin() + "..." + "Email: " + inscrito.getInscrito().getEmail());
             System.out.println("Id do video: " + video.getIdVideo());
-            String email = inscrito.getUsuario().getEmail();
+            String email = inscrito.getInscrito().getEmail();
             String titulo = "Novo vídeo no canal " + inscrito.getUsuario().getLogin();
             String path = "thumbnail-dir/" + video.getThumbnail();
 //            String mensagem = "Olá, " + inscrito.getInscrito().getLogin() + "! O canal " + inscrito.getUsuario().getLogin() + " postou um novo vídeo: " + video.getTitulo();

@@ -64,7 +64,7 @@ const Painel = observer(() => {
             <Row xs={1} md={3} className="g-3">
             {store?.videosOfCanal.map((item, idx) => (
                 <Col key={idx}>
-                    <Link to={'/view'} className='text-decoration-none'>
+                    <Link to={`/view/${item?.idVideo}`} className='text-decoration-none'>
                         <Card bg='dark' style={{color: 'white', height: 270, width: 410}}>
                             <img src={`${urlBase}/resources/image/${item?.thumbnail}`} alt={'thumbnail'} style={{height: 190, width: 410}}/>
                             <Card.Body>
@@ -74,7 +74,7 @@ const Painel = observer(() => {
                                 </div>
                                 <div className='col-10'>
                                     <Card.Text>
-                                        119 mil visualizações há 2 dias
+                                        {item?.visualizacoes} visualizações há 2 dias
                                     </Card.Text>
                                 </div>
                                 <div className='col-1'>
