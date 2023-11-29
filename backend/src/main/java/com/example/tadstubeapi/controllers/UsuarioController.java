@@ -69,4 +69,11 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/{id}")
+    public Usuario findById(@PathVariable Long id){
+        return service.getById(id);
+    }
+
+
+
 }

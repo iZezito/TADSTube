@@ -22,7 +22,7 @@ const Sidebar = observer(() => {
         <div className="side-grid">
             <Nav defaultActiveKey="/" className="flex-column">
                 <Link to={'/'} className={'nav-link text-light'}><BsHouseDoor style={{ width: 20, height: 20 }} /> Início</Link>
-                <Link to={'/canal'} className={'nav-link text-light'}><BsPersonSquare style={{ width: 20, height: 20 }} /> Seu canal</Link>
+                <Link to={`/canal/${store.idUser}`} className={'nav-link text-light'}><BsPersonSquare style={{ width: 20, height: 20 }} /> Seu canal</Link>
                 <Link to={'/upload'} className={'nav-link text-light'}><BsPlayBtn style={{ width: 20, height: 20 }}/> Enviar vídeo</Link>
                 <hr className="my-2" style={{ borderColor: 'white' }} />
                 <Link className={'nav-link text-light h1'}>Inscrições</Link>

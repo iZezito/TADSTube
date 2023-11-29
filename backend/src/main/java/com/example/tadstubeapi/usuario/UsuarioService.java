@@ -20,4 +20,7 @@ public class UsuarioService {
         return (Usuario) repository.findByLogin(login);
     }
 
+    public Usuario getById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
 }

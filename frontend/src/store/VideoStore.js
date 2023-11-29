@@ -40,6 +40,7 @@ class VideoStore {
     inscricao = {inscrito: {id: undefined}, usuario: {id: undefined}, dataInscricao: new Date()}
     inscritos = 0
     inscricoes = []
+    canal = {}
 
 
     constructor() {
@@ -211,8 +212,21 @@ class VideoStore {
         this.videos = videos
     }
 
-    getVideosOfCanal() {
-        api.get('videos/canal/' + this.idUser, {
+    getDadosCanal(id) {
+        api.get('usuarios/' + id, {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            this.canal = response.data;
+            console.log('canal', this.canal);
+        }).catch((erro) => {
+
+        })
+    }
+
+    getVideosOfCanal(id) {
+        api.get('videos/canal/' + id, {
             headers: {
                 'Authorization': 'Bearer ' + AuthStore.getToken
             }
@@ -525,6 +539,8 @@ class VideoStore {
             }
         }).then((response) => {
             this.setInscrito(true);
+            this.inscricao.idInscricao = response.data.idInscricao;
+            this.loadInscricoes();
         }).catch((erro) => {
             console.log(erro);
         })
@@ -532,14 +548,13 @@ class VideoStore {
     }
 
     desinscrever() {
-        this.inscricao.inscrito.id = this.videoView.usuario.id;
-        this.inscricao.usuario.id = Number(this.idUser);
         api.delete(`/inscricoes/${this.inscricao.idInscricao}`, {
             headers: {
                 'Authorization': 'Bearer ' + AuthStore.getToken
             }
         }).then((response) => {
             this.setInscrito(false);
+            this.inscricoes = this.inscricoes.filter((item) => item.idInscricao !== this.inscricao.idInscricao)
         }).catch((erro) => {
             console.log(erro);
         })

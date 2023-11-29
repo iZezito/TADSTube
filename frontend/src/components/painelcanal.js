@@ -6,18 +6,21 @@ import Row from 'react-bootstrap/Row';
 import { Modal } from "react-bootstrap";
 import Container from 'react-bootstrap/esm/Container';
 import { BsPersonCircle, BsBell, BsBellFill, BsPencil, BsXLg } from 'react-icons/bs';
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import { observer } from 'mobx-react';
 import store from '../store/VideoStore';
 import { ToastContainer, toast } from 'react-toastify';
 import {urlBase} from "../utils/URLBase";
 
 const Painel = observer(() => {
+
+    const { id } = useParams();
     const [inscrito, setInscrito] = useState(false)
 
     useEffect(  () => {
-        store.getVideosOfCanal()
-    }, []);
+        store.getVideosOfCanal(id)
+        store.getDadosCanal(id)
+    }, [id]);
 
     const [idVideoDelete, setIdVideoDelete] = useState(null)
 
@@ -39,9 +42,9 @@ const Painel = observer(() => {
                         <Card.Title><BsPersonCircle style={{width: 100, height: 100}}/></Card.Title>
                     </div>
                     <div class="col">
-                        <Card.Title>Canal X</Card.Title>
+                        <Card.Title>{store.canal?.login}</Card.Title>
                         <Card.Text>
-                            @CanalX 119 mil inscritos 2,3 mil vídeos
+                            @{store.canal?.login} 119 mil inscritos {store?.videosOfCanal?.length | 0} vídeos
                         </Card.Text>
                         <Card.Text>
                             Venha aprender!
@@ -77,6 +80,8 @@ const Painel = observer(() => {
                                         {item?.visualizacoes} visualizações há 2 dias
                                     </Card.Text>
                                 </div>
+                                { id === store.idUser && (
+                                    <>
                                 <div className='col-1'>
                                     <Link to={'/upload'} onClick={() => store.setVideoEdit(item)} className='text-light text-decoration-none'><BsPencil/></Link>
                                 </div>
@@ -86,6 +91,8 @@ const Painel = observer(() => {
                                         setShow(true)
                                     }}><BsXLg/></Link>
                                 </div>
+                                    </>
+                                )}
 
                             </div>
                             </Card.Body>

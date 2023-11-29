@@ -20,6 +20,7 @@ import { MdSend } from "react-icons/md";
 import { Col, Modal, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import VideoShareButton from '../components/ButtonShare'
+import {ToastContainer} from "react-toastify";
 
 const ViewVideo = observer(() => {
   const { id } = useParams();
@@ -93,9 +94,11 @@ const ViewVideo = observer(() => {
                         </Card.Title>
                       </div>
                       <div className="col">
+                        <Link to={`/canal/${store.videoView?.usuario?.id}`} className="text-decoration-none">
                         <Card.Title>
                           {store.videoView?.usuario?.login}
                         </Card.Title>
+                        </Link>
                         <Card.Text style={{ fontSize: 10 }}>
                           {store.videoView?.inscricoes} inscritos
                         </Card.Text>
@@ -510,6 +513,16 @@ const ViewVideo = observer(() => {
           </Modal.Footer>
         </Modal>
       </Container>
+      <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          draggable
+          theme="dark"
+      />
     </>
   );
 });

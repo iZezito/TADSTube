@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {BsWhatsapp, BsClipboard2Check, BsShareFill} from "react-icons/bs";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { toastSucesso, toastErro} from "../utils/Toaster";
 
 function VideoShareButton() {
 
@@ -23,13 +24,14 @@ function VideoShareButton() {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(videoLink)
         .then(() => {
-          alert('Link copiado para a área de transferência');
+            toastSucesso('Link copiado para a área de transferência!', 1000);
+            setShow(false)
         })
         .catch(error => {
-          console.error('Erro ao copiar para a área de transferência:', error);
+            toastErro(`Erro ao copiar para a área de transferência: ${error}`, 1000);
         });
     } else {
-      alert('Seu navegador não suporta a funcionalidade de cópia para a área de transferência.');
+      toastErro('Seu navegador não suporta a funcionalidade de cópia para a área de transferência.', 1000);
     }
   };
 
