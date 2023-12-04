@@ -102,7 +102,7 @@ public class VideoService extends GenericService<Video> {
             String email = inscrito.getInscrito().getEmail();
             String titulo = "Novo vídeo no canal " + inscrito.getUsuario().getLogin();
             String path = "thumbnail-dir/" + video.getThumbnail();
-            String videoUrl = "URL_DO_SEU_VIDEO"; // Substitua com a URL real do seu vídeo
+            String videoUrl = "http://localhost:3000/view/" + video.getIdVideo(); // Substitua com a URL real do seu vídeo
 
             // Corpo do e-mail com link para o vídeo e algumas classes do Bootstrap
             String mensagem = "<div class=\"container\">" +
