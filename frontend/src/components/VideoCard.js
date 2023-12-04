@@ -4,7 +4,8 @@ import Col from "react-bootstrap/Col";
 import { BsPersonCircle } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { urlBase } from "../utils/URLBase";
-const VideoCard = ({ idVideo, titulo, thumbnail, usuario, visualizacoes }) => {
+import {formatarData} from "../utils/DateFormater";
+const VideoCard = ({ idVideo, titulo, thumbnail, usuario, visualizacoes, dataUpload }) => {
   return (
     <Col>
       <Link to={`/view/${idVideo}`} className="text-decoration-none">
@@ -24,7 +25,7 @@ const VideoCard = ({ idVideo, titulo, thumbnail, usuario, visualizacoes }) => {
               <div class="col">
                 <Card.Title>{titulo}</Card.Title>
                 <Card.Text>{usuario?.login}</Card.Text>
-                <Card.Text>{visualizacoes} visualizações</Card.Text>
+                <Card.Text>{visualizacoes} visualizações há {formatarData(dataUpload)}</Card.Text>
               </div>
             </div>
           </Card.Body>

@@ -11,6 +11,7 @@ import { observer } from 'mobx-react';
 import store from '../store/VideoStore';
 import { ToastContainer, toast } from 'react-toastify';
 import {urlBase} from "../utils/URLBase";
+import {formatarData} from "../utils/DateFormater";
 
 const Painel = observer(() => {
 
@@ -77,7 +78,7 @@ const Painel = observer(() => {
                                 </div>
                                 <div className='col-10'>
                                     <Card.Text>
-                                        {item?.visualizacoes} visualizações há 2 dias
+                                        {item?.visualizacoes} visualizações há {formatarData(item?.dataUpload)}
                                     </Card.Text>
                                 </div>
                                 { id === store.idUser && (

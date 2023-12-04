@@ -160,6 +160,7 @@ class VideoStore {
             return;
         }
         this.videoData.usuario.id = Number(this.idUser);
+        this.videoData.dataUpload = new Date();
         console.log('videoData', this.videoData);
 
         const formData = new FormData();
@@ -348,6 +349,7 @@ class VideoStore {
     enviarComentario() {
         this.comentario.usuario.id = Number(this.idUser);
         this.comentario.video.idVideo = Number(this.videoView.idVideo);
+        this.comentario.dataComentario = new Date();
         api.post('/comentarios', this.comentario, {
             headers: {
                 'Authorization': 'Bearer ' + AuthStore.getToken
@@ -395,6 +397,7 @@ class VideoStore {
 
     enviarRespostaComentario(comentarioId) {
         this.resposta.usuario.id = Number(this.idUser);
+        this.resposta.dataResposta = new Date();
         api.post(`respostas/${comentarioId}`, this.resposta, {
             headers: {
                 'Authorization': 'Bearer ' + AuthStore.getToken
@@ -533,6 +536,7 @@ class VideoStore {
     inscrever() {
         this.inscricao.inscrito.id = Number(this.idUser);
         this.inscricao.usuario.id = this.videoView.usuario.id;
+        this.inscricao.dataInscricao = new Date();
         api.post('/inscricoes', this.inscricao, {
             headers: {
                 'Authorization': 'Bearer ' + AuthStore.getToken
