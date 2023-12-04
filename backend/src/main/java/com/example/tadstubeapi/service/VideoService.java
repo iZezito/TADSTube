@@ -105,24 +105,26 @@ public class VideoService extends GenericService<Video> {
             String videoUrl = "http://localhost:3000/view/" + video.getIdVideo(); // Substitua com a URL real do seu vídeo
 
             // Corpo do e-mail com link para o vídeo e algumas classes do Bootstrap
-            String mensagem = "<div class=\"container\">" +
+            String mensagem = "<html><head><link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"></head>"+
+                    "<div class=\"container\">" +
                     "    <a href=\"" + videoUrl + "\">" +
                     "        <div class=\"card bg-dark text-white\">" +
-                    "            <img src='cid:image' alt=\"thumbnail\" class=\"card-img-top\"/>" +
+                    "            <img src='cid:image' alt=\"thumbnail\" class=\"card-img-top\" style=\"max-width: 480px; max-height: 360px;\"/>" +
                     "            <div class=\"card-body\">" +
                     "                <div class=\"row\">" +
                     "                    <div class=\"col-auto\">" +
                     "                        <h5 class=\"card-title\"><!-- Ícone de pessoa --></h5>" +
                     "                    </div>" +
                     "                    <div class=\"col\">" +
-                    "                        <h5 class=\"card-title\">" + video.getTitulo() + "</h5>" +
-                    "                        <p class=\"card-text\">" + inscrito.getUsuario().getLogin() + "</p>" +
+                    "                        <h5 class=\"card-title\">" + "Título: " + video.getTitulo() + "</h5>" +
+                    "                        <p class=\"card-text\">" + "Canal: " + inscrito.getUsuario().getLogin() + "</p>" +
                     "                    </div>" +
                     "                </div>" +
                     "            </div>" +
                     "        </div>" +
                     "    </a>" +
-                    "</div>";
+                    "</div>"+
+                    "<html>";
 
             emailService.sendEmailWithInlineImage(email, titulo, mensagem, path);
         }
