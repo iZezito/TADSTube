@@ -96,28 +96,34 @@ public class VideoService extends GenericService<Video> {
     }
 
     public void sendEmails(List<Inscricao> inscricoes, Video video) {
-        for(var inscrito : inscricoes){
+        for (var inscrito : inscricoes) {
             System.out.println("Enviando email para " + inscrito.getInscrito().getLogin() + "..." + "Email: " + inscrito.getInscrito().getEmail());
-            System.out.println("Id do video: " + video.getIdVideo());
+            System.out.println("Id do vídeo: " + video.getIdVideo());
             String email = inscrito.getInscrito().getEmail();
             String titulo = "Novo vídeo no canal " + inscrito.getUsuario().getLogin();
             String path = "thumbnail-dir/" + video.getThumbnail();
-//            String mensagem = "Olá, " + inscrito.getInscrito().getLogin() + "! O canal " + inscrito.getUsuario().getLogin() + " postou um novo vídeo: " + video.getTitulo();
-            String mensagem = "<div class=\"card bg-dark text-white\">\n" +
-                    "    <img src='cid:image' alt=\"thumbnail\" />\n" +
-                    "\n" +
-                    "    <div class=\"card-body\">\n" +
-                    "        <div class=\"row\">\n" +
-                    "            <div class=\"col-auto\">\n" +
-                    "                <h5 style=\"width: 50px; height: 50px;\"><!-- Ícone de pessoa --></h5>\n" +
-                    "            </div>\n" +
-                    "            <div class=\"col\">\n" +
-                    "                <h5>" + video.getTitulo() + "</h5>\n" +
-                    "                <p>" + inscrito.getUsuario().getLogin() + "</p>\n" +
-                    "            </div>\n" +
-                    "        </div>\n" +
-                    "    </div>\n" +
+            String videoUrl = "URL_DO_SEU_VIDEO"; // Substitua com a URL real do seu vídeo
+
+            // Corpo do e-mail com link para o vídeo e algumas classes do Bootstrap
+            String mensagem = "<div class=\"container\">" +
+                    "    <a href=\"" + videoUrl + "\">" +
+                    "        <div class=\"card bg-dark text-white\">" +
+                    "            <img src='cid:image' alt=\"thumbnail\" class=\"card-img-top\"/>" +
+                    "            <div class=\"card-body\">" +
+                    "                <div class=\"row\">" +
+                    "                    <div class=\"col-auto\">" +
+                    "                        <h5 class=\"card-title\"><!-- Ícone de pessoa --></h5>" +
+                    "                    </div>" +
+                    "                    <div class=\"col\">" +
+                    "                        <h5 class=\"card-title\">" + video.getTitulo() + "</h5>" +
+                    "                        <p class=\"card-text\">" + inscrito.getUsuario().getLogin() + "</p>" +
+                    "                    </div>" +
+                    "                </div>" +
+                    "            </div>" +
+                    "        </div>" +
+                    "    </a>" +
                     "</div>";
+
             emailService.sendEmailWithInlineImage(email, titulo, mensagem, path);
         }
     }
