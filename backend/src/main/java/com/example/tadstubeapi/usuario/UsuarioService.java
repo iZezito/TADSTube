@@ -23,4 +23,8 @@ public class UsuarioService {
     public Usuario getById(Long id) {
         return repository.findById(id).orElse(null);
     }
+
+    public Usuario findByEmail(String email) {
+        return (Usuario) repository.findByEmail(email);
+    }
 }

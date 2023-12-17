@@ -69,6 +69,16 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/email/{email}")
+    public String email(@PathVariable String email){
+        Usuario usuarioBanco = service.findByEmail(email);
+        if(usuarioBanco != null){
+            return "Email já existente";
+        }else{
+            return "Email disponível";  
+        }
+    }
+
     @GetMapping("/{id}")
     public Usuario findById(@PathVariable Long id){
         return service.getById(id);

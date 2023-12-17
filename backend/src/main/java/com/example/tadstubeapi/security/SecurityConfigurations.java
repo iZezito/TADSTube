@@ -33,6 +33,7 @@ public class SecurityConfigurations {
                 .and().authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/login", "/usuarios", "/usuarios/matricula").permitAll()
                 .requestMatchers(HttpMethod.GET, "/usuarios/login/{login}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/usuarios/email/{email}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/resources/image/{filename:.+}").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

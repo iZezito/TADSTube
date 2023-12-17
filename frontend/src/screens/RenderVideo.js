@@ -1,18 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/esm/Container';
-import { BsPersonCircle } from 'react-icons/bs';
+import {BsPersonCircle} from 'react-icons/bs';
 import Painel from '../components/painelcanal';
 import VideoCard from '../components/VideoCard';
 import store from '../store/VideoStore';
-import { observer } from 'mobx-react';
+import {observer} from 'mobx-react';
+import Placeholder from 'react-bootstrap/Placeholder';
+import VideoCardPlaceholder from "../components/VideoCardPlaceHolder";
 
 const VideoPlayer = observer(() => {
     const videoRef = useRef(null);
+    const [placeholder, setPlaceholder] = useState(Array(6).fill(''))
 
-    useEffect(  () => {
+    useEffect(() => {
         store.getVideos();
         // const filename = 'Alugamos_um_CARRO_de_TR_S_RODAS___.mp4'; // Substitua pelo nome do vídeo que você deseja reproduzir
 
@@ -34,32 +37,40 @@ const VideoPlayer = observer(() => {
 
     return (
         <>
-        <Container className={'overflow-auto mt-5'}>
+            <Container className={'overflow-auto mt-5'}>
 
-            {store.videos.length === 0 ? (
-                <h1 className='text-light'>
-                    Ainda não há vídeos cadastrados!
-                </h1>
-            ) : (
-                <>
-                <Row xs={1} md={3} className="g-3">
-                {store.videos.map((item) => (
-                    <VideoCard key={item.id} {...item} />
-                ))}
-                </Row>
-                </>
-            )}
-        </Container>
+                {store.loading ? (
+                    <>
+                    <Row xs={1} md={3} className="g-3">
+                        {
+                            placeholder.map((item, index) => (
+                        <VideoCardPlaceholder key={index} />
+                    ))}
+                    </Row>
+                    </>
+                ) : (
+                    <>
+                {store.videos.length === 0 ? (
+                    <h1 className='text-light'>
+                        Ainda não há vídeos cadastrados!
+                    </h1>
+                ) : (
+                    <>
+                        <Row xs={1} md={3} className="g-3">
+                            {store.videos.map((item) => (
+                                <VideoCard key={item.id} {...item} />
+                            ))}
+                        </Row>
+                    </>
+                )}
+                    </>
+                )}
+            </Container>
         </>
     );
 });
 
 export default VideoPlayer;
-
-
-
-
-
 
 
 // import React, { useRef, useEffect, useState } from 'react';

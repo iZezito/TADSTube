@@ -11,6 +11,7 @@ import {observer} from "mobx-react";
 import AuthStore from "./store/AuthStore";
 import ViewVideo from "./components/ViwVideo";
 import Search from "./screens/Search";
+import Cadastro from "./screens/SIngUp";
 
 const App = observer(() => {
     const {isAuthenticated} = AuthStore;
@@ -31,6 +32,7 @@ const App = observer(() => {
                         {isAuthenticated && <Route path="*" element={<NotFoundPage />} />}
                         {isAuthenticated && <Route path="/view/:id" element={<ViewVideo />} />}
                         {isAuthenticated && <Route path="/search" element={<Search/>}/>}
+                        {!isAuthenticated && <Route path="/cadastro" element={<Cadastro />}/>}
                     </Routes>
                 </div>
 

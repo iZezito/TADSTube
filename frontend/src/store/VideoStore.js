@@ -114,6 +114,7 @@ class VideoStore {
 
 
     getVideos() {
+        this.loading = true;
         api.get('videos', {
             headers: {
                 'Authorization': 'Bearer ' + AuthStore.getToken
@@ -122,10 +123,12 @@ class VideoStore {
             console.log(response.data)
             this.videos = response.data
         }).catch((erro) => {
-            if (erro.response.status === 403) {
+            if (erro.status === 403) {
                 AuthStore.logout();
             }
-        })
+        }).finally(() => {
+            this.loading = false;
+        });
 
     }
 

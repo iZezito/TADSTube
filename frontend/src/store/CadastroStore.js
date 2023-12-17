@@ -1,12 +1,15 @@
 import api from "../service/Configuration";
 import {makeAutoObservable} from "mobx";
+import { toastSucesso, toastErro } from "../utils/Toaster";
 
 class CadastroStore {
 
         avisoMatricula = '';
         avisoLogin = '';
-        usuario = {login: '', senha: '', matricula: ''};
+        usuario = {login: '', senha: '', matricula: '', email: ''};
         arquivo = null;
+        avisoEmail = '';
+        regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         constructor() {
             makeAutoObservable(this);
@@ -54,12 +57,37 @@ class CadastroStore {
                 });
         }
 
-        cadastrarUsuario() {
+        verificarEmail() {
+
+            api.get(`usuarios/email/${this.usuario.email}`)
+                .then(response => {
+
+                    this.avisoEmail = response.data;
+                    // verificar se o email é válido
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+        cadastrarUsuario(navigate) {
             api.post('usuarios', this.usuario).then((response) => {
                 console.log(response.data)
+                toastSucesso('Usuário cadastrado com sucesso!');
+                setTimeout(() => {
+                    // Suas regras de navegação aqui
+                    // Exemplo: navegar para '/outra-pagina'
+                    navigate('/login');
+                }, 3000);
+
             }).catch((erro) => {
+                toastErro('Erro ao cadastrar usuário!')
                 console.log(erro)
             })
+        }
+
+        setEmail(email) {
+            this.usuario.email = email;
         }
 }
 
